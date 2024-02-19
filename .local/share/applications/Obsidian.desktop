@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Obsidian
+Comment=
+Exec=/opt/obsidian/Obsidian-1.5.3.AppImage
+Icon=~/.local/share/icons/2023_Obsidian_logo.svg
+Terminal=false
+StartupNotify=false

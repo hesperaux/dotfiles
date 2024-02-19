@@ -1,0 +1,6 @@
+  ~/.config/nvim
+    code-styles
+    lua
+    init.lua
+    lazy-lock.json
+   (2 hidden items)

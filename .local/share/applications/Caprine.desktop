@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Caprine
+Comment=
+Exec=snap run caprine
+Icon=~/.local/share/icons/messenger.png
+Terminal=false
+StartupNotify=false

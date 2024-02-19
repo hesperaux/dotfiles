@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Looking Glass
+Comment=
+Exec=looking-glass-client -s -m 97
+Icon=org.xfce.panel.showdesktop
+Path=
+Terminal=false
+StartupNotify=false

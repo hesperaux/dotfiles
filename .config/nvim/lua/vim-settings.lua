@@ -1,0 +1,27 @@
+
+vim.cmd("set expandtab")
+vim.cmd("set tabstop=8")
+vim.cmd("set softtabstop=0")
+vim.cmd("set shiftwidth=4 smarttab")
+vim.keymap.set('n', '<C-u>', '<C-u>zz', {})
+vim.keymap.set('n', '<C-d>', '<C-d>zz', {})
+vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
+vim.keymap.set('n', '<leader>n', ':bnext<CR>', {})
+vim.keymap.set('n', '<leader>N', ':bprev<CR>', {})
+vim.keymap.set('n', '<C-h>', '<C-w>h', {})
+vim.keymap.set('n', '<C-j>', '<C-w>j', {})
+vim.keymap.set('n', '<C-k>', '<C-w>k', {})
+vim.keymap.set('n', '<C-l>', '<C-w>l', {})
+vim.keymap.set('n', '<leader>v', '<C-w>v<C-w>l', {})
+vim.keymap.set('n', '<leader>h', '<C-w>s<C-w>j', {})
+vim.keymap.set('n', 'U', '<C-R>', {}) -- Redo command
+vim.keymap.set('n', '<leader><', 'V`]<', {})
+vim.keymap.set('n', '<leader>>', 'V`]>', {})
+vim.keymap.set('n', "<C-W><C-W>", ":bd<CR>", {})
+vim.keymap.set("n", "<C-W>,", ":vertical resize -10<CR>", {noremap=true})
+vim.keymap.set("n", "<C-W>.", ":vertical resize +10<CR>", {noremap=true})
+vim.keymap.set('n', '<leader>eo', 'o<Esc>k', {})
+vim.keymap.set('n', '<leader>EO', 'O<Esc>j', {})
+vim.keymap.set('n', '<leader>nd', ':NoiceDismiss<CR>', {})
+
+vim.cmd("set conceallevel=1")
