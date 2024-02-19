@@ -101,7 +101,7 @@ deps() {
         libgles-dev libspice-protocol-dev nettle-dev libx11-dev libxcursor-dev \
         libxi-dev libxinerama-dev libxpresent-dev libxss-dev libxkbcommon-dev \
         libwayland-dev wayland-protocols libpipewire-0.3-dev libpulse-dev \
-        libsamplerate0-dev psmisc feh wmctrl slop golang npm rustc cargo-doc netctl \
+        libsamplerate0-dev psmisc feh wmctrl slop golang npm netctl \
         usbtop btop powerstat fonts-sil-andika gettext cmake ninja-build gettext unzip \
         luajit libluajit-5.1-dev lua-mpack lua-lpeg libunibilium-dev libmsgpack-dev \
         libtermkey-dev ripgrep libtree-sitter0 libvterm0 lua-luv python3-greenlet python3-msgpack \

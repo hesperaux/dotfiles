@@ -633,9 +633,10 @@ def hdd_graph():
     )
 
 
-def df_root(bg_color=colors["bg"]):
+def df_root(fg_color=colors["fg"], bg_color=colors["bg"]):
     return widget.DF(
         background=bg_color,
+        foreground=fg_color,
         format=" {uf}{m}|{r:.0f}%",
         measure="G",
         partition="/",
@@ -654,9 +655,10 @@ def df_root(bg_color=colors["bg"]):
     )
 
 
-def df_home(bg_color=colors["bg"]):
+def df_home(fg_color=colors["fg"], bg_color=colors["bg"]):
     return widget.DF(
         background=bg_color,
+        foreground=fg_color,
         format=" {uf}{m}|{r:.0f}%",
         measure="G",
         partition="/home",
@@ -753,10 +755,10 @@ def get_screen_bar(screen_number):
                 memory_graph(colors["bg"]),
                 get_gap_widget(5, colors["bg"]),
                 get_separator_widget("", colors["bg"], colors["color5"]),
-                df_root(colors["color5"]),
-                df_home(colors["color5"]),
+                df_root(colors["bg"], colors["color5"]),
+                df_home(colors["bg"], colors["color5"]),
                 get_separator_widget("", colors["color5"]),
-                get_gap_widget(5),
+                get_gap_widget(10),
                 pulse_volume(),
                 get_gap_widget(5),
                 get_systray(),
@@ -794,10 +796,10 @@ def get_screen_bar(screen_number):
                 memory_graph(colors["bg"]),
                 get_gap_widget(5, colors["bg"]),
                 get_separator_widget("", colors["bg"], colors["color5"]),
-                df_root(colors["color5"]),
-                df_home(colors["color5"]),
+                df_root(colors["bg"], colors["color5"]),
+                df_home(colors["bg"], colors["color5"]),
                 get_separator_widget("", colors["color5"]),
-                get_gap_widget(5),
+                get_gap_widget(10),
                 pulse_volume(),
                 get_gap_widget(5),
                 get_systray(),
