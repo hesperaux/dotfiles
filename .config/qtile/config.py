@@ -90,19 +90,19 @@ rose_pine = dict(
     iris="c4a7e7",
     highlight_low="#21202e",
     highlight_med="#403d52",
-    highlight_high="#524f67"
+    highlight_high="#524f67",
 )
 
 colors = {
-            "bg": rose_pine["base"],
-            "fg": rose_pine["text"],
-            "color0": rose_pine["love"],
-            "color1": rose_pine["gold"],
-            "color2": rose_pine["rose"],
-            "color3": rose_pine["pine"],
-            "color4": rose_pine["foam"],
-            "color5": rose_pine["iris"],
-            "color6": rose_pine["foam"],
+    "bg": rose_pine["base"],
+    "fg": rose_pine["text"],
+    "color0": rose_pine["love"],
+    "color1": rose_pine["gold"],
+    "color2": rose_pine["rose"],
+    "color3": rose_pine["pine"],
+    "color4": rose_pine["foam"],
+    "color5": rose_pine["iris"],
+    "color6": rose_pine["foam"],
 }
 
 
@@ -253,26 +253,25 @@ keys = [
 ]
 
 groups = [
-    Group("ADM"),
+    Group("  "),
     Group(
-        "WEB",
+        " 爵 ",
         matches=[Match(wm_class=["Google-chrome", "Firefox-esr", "Brave-browser"])],
     ),
-    Group(
-        "CHAT",
+    Group(" ",
         matches=[Match(wm_class=["Caprine", "discord", "Microsoft Teams - Preview"])],
     ),
     Group(
-        "CODE",
+        "  ",
         matches=[
             Match(wm_class=["jetbrains-pycharm", "jetbrains-rider", "jetbrains-clion"])
         ],
     ),
-    Group("VM", matches=[Match(wm_class=["Virt-manager", "looking-glass-client"])]),
-    Group("NOTE", matches=[Match(wm_class=["obsidian"])]),
-    Group("GFX", matches=[Match(wm_class=["Blender", "geeqie"])]),
-    Group("MEDIA", matches=[Match(wm_class=["vlc", "Parole"])], layout="grid"),
-    Group("VID", matches=[Match(wm_class=["vlc", "Parole"])], layout="grid"),
+    Group("   ", matches=[Match(wm_class=["Virt-manager", "looking-glass-client"])]),
+    Group("   ", matches=[Match(wm_class=["obsidian"])]),
+    Group("  ", matches=[Match(wm_class=["Blender", "geeqie"])]),
+    Group("  ", matches=[Match(wm_class=["vlc", "Parole"])], layout="grid"),
+    Group("  ", matches=[Match(wm_class=["vlc", "Parole"])], layout="grid"),
 ]
 
 for idx, i in enumerate(groups):
@@ -346,7 +345,7 @@ keys.extend(
     ]
 )
 
-widget_border_default = [0, 0, 2, 0]
+widget_border_default = [0, 0, 0, 0]
 
 layout_margin_defaults = dict(
     margin=8,
@@ -390,11 +389,31 @@ widget_defaults = dict(
 
 extension_defaults = widget_defaults.copy()
 
-font_defaults = dict()
+font_defaults = dict(
+    font="0xProto Nerd Font",
+    fontsize=16
+)
 
 
-def get_battery_widget():
+def get_gap_widget(size, bg_color="00000000"):
+    return widget.Spacer(size, background=bg_color)
+
+
+def get_separator_widget(separator, fg_color, bg_color="00000000"):
+    separator_conf = dict(
+        margin=0,
+        padding=0,
+        font="0xProto Nerd Font",
+        fontsize=26,  # Font pixel size. Calculated if None.
+        foreground=fg_color,
+        background=bg_color
+    )
+    return widget.TextBox(separator, **separator_conf)
+
+
+def get_battery_widget(bg_color=colors["bg"]):
     conf = dict(
+        background=bg_color,
         charge_char="",
         discharge_char="",
         full_char="",
@@ -482,12 +501,14 @@ mouse = [
 ]
 
 
-def group_box():
+def group_box(bg_color):
     return widget.GroupBox(
         margin_x=0,
-        padding_x=5,
+        padding_x=0,
         margin_y=5,
+        spacing=0,
         rounded=False,
+        background=bg_color,
         highlight_method="line",
         highlight_color=colors["color3"],
         active=colors["color4"],
@@ -497,31 +518,52 @@ def group_box():
         other_screen_border=colors["color2"],
         inactive=colors["color5"],
         foreground=colors["fg"],
+        disable_drag=True,
         **font_defaults,
     )
 
 
-def current_layout():
-    return widget.CurrentLayout(
-        **font_defaults,
+def get_layout_icon():
+    lazy.widget["currentlayout"].info()
+
+
+def window_count(bg_color):
+    return widget.WindowCount(
+        foreground=colors["fg"],
+        background=bg_color,
+        text_format="{num}",
+        padding=0,
+        show_zero=True,
+        fontsize=11
     )
 
 
-def window_name():
+def current_layout(bg_color):
+    # return widget.TextBox(
+
+    # )
+    return widget.CurrentLayoutIcon(
+        background=bg_color,
+        padding=4,
+        fontsize=12,
+        scale=0.6
+    )
+
+
+def window_name(bg_color):
     return widget.WindowName(
         decorations=[
             BorderDecoration(
                 border_width=widget_border_default,
                 colour=colors["color2"],
-                padding=0,
-                padding_x=3,
             )
         ],
+        background=bg_color,
         **font_defaults,
     )
 
 
-def net():
+def net(bg_color=colors["bg"]):
     return widget.Net(
         decorations=[
             BorderDecoration(
@@ -531,13 +573,16 @@ def net():
                 padding_x=3,
             )
         ],
+        background=bg_color,
         **font_defaults,
     )
 
 
-def cpu_graph():
+def cpu_graph(bg_color=colors["bg"]):
     return widget.CPUGraph(
-        border_width=1,
+        background=bg_color,
+        border_width=0,
+        margin_y=2,
         border_color=colors["color2"],
         fill_color=colors["color2"],
         graph_color=colors["color2"],
@@ -555,10 +600,12 @@ def cpu_graph():
     )
 
 
-def memory_graph():
+def memory_graph(bg_color=colors["bg"]):
     return widget.MemoryGraph(
+        background=bg_color,
         width=40,
-        border_width=1,
+        border_width=0,
+        margin_y=2,
         line_width=1,
         border_color=colors["color6"],
         fill_color=colors["color6"],
@@ -586,8 +633,9 @@ def hdd_graph():
     )
 
 
-def df_root():
+def df_root(bg_color=colors["bg"]):
     return widget.DF(
+        background=bg_color,
         format=" {uf}{m}|{r:.0f}%",
         measure="G",
         partition="/",
@@ -606,8 +654,9 @@ def df_root():
     )
 
 
-def df_home():
+def df_home(bg_color=colors["bg"]):
     return widget.DF(
+        background=bg_color,
         format=" {uf}{m}|{r:.0f}%",
         measure="G",
         partition="/home",
@@ -656,8 +705,9 @@ def notify():
     )
 
 
-def clock():
+def clock(bg_color=colors["bg"]):
     return widget.Clock(
+        background=bg_color,
         format="%A %m/%d/%Y %I:%M %p",
         decorations=[
             BorderDecoration(
@@ -673,50 +723,93 @@ def clock():
 
 
 def get_screen_bar(screen_number):
+    conf = dict(
+        border_width=[0, 0, 0, 0],  # Draw top and bottom borders
+        border_color=[colors["bg"], "000000", colors["bg"], "000000"],
+        background=["#00000000", "#00000000"],
+    )
+
     if screen_number == 0:
         return bar.Bar(
             [
-                group_box(),
-                current_layout(),
-                window_name(),
-                net(),
-                cpu_graph(),
-                memory_graph(),
+                group_box(colors["bg"]),
+                get_separator_widget("", colors["bg"]),
+                get_gap_widget(5),
+                get_separator_widget("", colors["color3"]),
+                current_layout(colors["color3"]),
+                window_count(colors["color3"]),
+                get_separator_widget("", colors["color3"], colors["bg"]),
+                window_name(colors["bg"]),
+                get_separator_widget("", colors["bg"]),
+                get_gap_widget(5),
+                get_separator_widget("", colors["color3"]),
                 get_wlan_widget(),
-                df_root(),
-                df_home(),
+                get_separator_widget("", colors["color3"], colors["bg"]),
+                net(colors["bg"]),
+                get_separator_widget("", colors["bg"]),
+                get_gap_widget(5),
+                get_separator_widget("", colors["bg"]),
+                cpu_graph(colors["bg"]),
+                memory_graph(colors["bg"]),
+                get_gap_widget(5, colors["bg"]),
+                get_separator_widget("", colors["bg"], colors["color5"]),
+                df_root(colors["color5"]),
+                df_home(colors["color5"]),
+                get_separator_widget("", colors["color5"]),
+                get_gap_widget(5),
                 pulse_volume(),
+                get_gap_widget(5),
                 get_systray(),
+                get_gap_widget(5),
                 notify(),
+                get_gap_widget(5),
+                get_separator_widget("", colors["bg"]),
                 get_battery_widget(),
                 clock(),
             ],
-            32,
-            border_width=[0, 0, 0, 0],  # Draw top and bottom borders
-            border_color=[colors["bg"], "000000", colors["bg"], "000000"],
-            background=["#000000aa", "#000000ee"],
+            30,
+            **conf
         )
     elif screen_number == 1:
         return bar.Bar(
             [
-                group_box(),
-                current_layout(),
-                window_name(),
-                net(),
-                cpu_graph(),
-                memory_graph(),
+                group_box(colors["bg"]),
+                get_separator_widget("", colors["bg"]),
+                get_gap_widget(5),
+                get_separator_widget("", colors["color3"]),
+                current_layout(colors["color3"]),
+                window_count(colors["color3"]),
+                get_separator_widget("", colors["color3"], colors["bg"]),
+                window_name(colors["bg"]),
+                get_separator_widget("", colors["bg"]),
+                get_gap_widget(5),
+                get_separator_widget("", colors["color3"]),
                 get_wlan_widget(),
-                df_root(),
-                df_home(),
+                get_separator_widget("", colors["color3"], colors["bg"]),
+                net(colors["bg"]),
+                get_separator_widget("", colors["bg"]),
+                get_gap_widget(5),
+                get_separator_widget("", colors["bg"]),
+                cpu_graph(colors["bg"]),
+                memory_graph(colors["bg"]),
+                get_gap_widget(5, colors["bg"]),
+                get_separator_widget("", colors["bg"], colors["color5"]),
+                df_root(colors["color5"]),
+                df_home(colors["color5"]),
+                get_separator_widget("", colors["color5"]),
+                get_gap_widget(5),
                 pulse_volume(),
+                get_gap_widget(5),
                 get_systray(),
+                get_gap_widget(5),
+                notify(),
+                get_gap_widget(5),
+                get_separator_widget("", colors["bg"]),
                 get_battery_widget(),
                 clock(),
             ],
-            32,
-            border_width=[0, 0, 0, 0],  # Draw top and bottom borders
-            border_color=[colors["bg"], "000000", colors["bg"], "000000"],
-            background=["#000000aa", "#000000ee"],
+            30,
+            **conf
         )
 
 
