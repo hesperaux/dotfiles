@@ -444,8 +444,9 @@ def get_battery_widget(bg_color=colors["bg"]):
         return widget.Spacer(length=0)
 
 
-def get_wlan_widget():
+def get_wlan_widget(bg_color=colors["bg"]):
     wlan_config = dict(
+        background=bg_color,
         decorations=[
             BorderDecoration(
                 border_width=widget_border_default,
@@ -745,7 +746,7 @@ def get_screen_bar(screen_number):
                 get_separator_widget("", colors["bg"]),
                 get_gap_widget(5),
                 get_separator_widget("", colors["color3"]),
-                get_wlan_widget(),
+                get_wlan_widget(colors["color3"]),
                 get_separator_widget("", colors["color3"], colors["bg"]),
                 net(colors["bg"]),
                 get_separator_widget("", colors["bg"]),
@@ -786,7 +787,7 @@ def get_screen_bar(screen_number):
                 get_separator_widget("", colors["bg"]),
                 get_gap_widget(5),
                 get_separator_widget("", colors["color3"]),
-                get_wlan_widget(),
+                get_wlan_widget(colors["color3"]),
                 get_separator_widget("", colors["color3"], colors["bg"]),
                 net(colors["bg"]),
                 get_separator_widget("", colors["bg"]),
