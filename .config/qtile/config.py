@@ -258,7 +258,7 @@ groups = [
         " 爵 ",
         matches=[Match(wm_class=["Google-chrome", "Firefox-esr", "Brave-browser"])],
     ),
-    Group(" ",
+    Group("  ",
         matches=[Match(wm_class=["Caprine", "discord", "Microsoft Teams - Preview"])],
     ),
     Group(
