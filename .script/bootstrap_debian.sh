@@ -139,7 +139,23 @@ elif [[ "$1" == "dotnet" ]]; then
 elif [[ "$1" == "brave" ]]; then
     brave
     exit
-else
+elif [[ "$1" == "dotfiles" ]]; then
+    if [[ ! -d "${HOME}/.wallfiles" ]]; then
+        git clone git@github.com:hesperaux/wallfiles.git --bare ~/.wallfiles
+    fi;
+    if [[ ! -d "${HOME}/.themefiles" ]]; then
+        git clone git@github.com:hesperaux/themefiles.git --bare ~/.themefiles
+    fi;
+    if [[ ! -d "${HOME}/.fontfiles" ]]; then
+        git clone git@github.com:hesperaux/fontfiles.git --bare ~/.fontfiles
+    fi;
     dotfiles config --local status.showUntrackedFiles no
-    sudo gpasswd -a ${USERNAME} sudo
+    wallfiles config --local status.showUntrackedFiles no
+    themefiles config --local status.showUntrackedFiles no
+    fontfiles config --local status.showUntrackedFiles no
+    exit
+else
+    echo "Options are: looking-glass, rofi-calc, apt, neovim, zsh, dotnet, brave, dotfiles"
+    echo "Using 'su' to add ${USERNAME} to sudo group."
+    su -c 'gpasswd -a ${USERNAME} sudo'
 fi;
