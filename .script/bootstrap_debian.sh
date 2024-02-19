@@ -25,6 +25,11 @@ install_looking_glass_deps () {
         libpipewire-0.3-dev libpulse-dev libsamplerate0-dev
 }
 
+install_fzf() {
+    cd ~/git && git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+}
+
 install_rofi_calc () {
     DIR=`pwd`
     sudo apt-get install rofi-dev qalc libtool libtool-bin autoconf
@@ -138,6 +143,9 @@ elif [[ "$1" == "dotnet" ]]; then
     exit
 elif [[ "$1" == "brave" ]]; then
     brave
+    exit
+elif [[ "$1" == "fzf" ]]; then
+    install_fzf
     exit
 elif [[ "$1" == "dotfiles" ]]; then
     if [[ ! -d "${HOME}/.wallfiles" ]]; then
