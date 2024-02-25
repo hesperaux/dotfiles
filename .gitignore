@@ -1,0 +1,41 @@
+# Ignore common cruft
+**/*.old*
+# Ingore dotfile repos
+.dotfiles
+.themefiles
+.wallfiles
+.fontfiles
+# Ignore private info
+.config/qtile/geoloc
+.config/qtile/host_autostart.sh
+.ssh
+# Ignore other common repo roots
+git/
+repos/
+# Ignore common fat folders
+.cache
+.mozilla
+.*error*
+.cargo
+.emerald
+.rustup
+Downloads/
+Documents/
+Pictures/
+Videos/
+.config/google-chrome
+.config/discord
+.config/BraveSoftware
+.config/obsidian
+.config/chromium
+.config/GIMP
+.config/polybar
+.var
+.local/share/nixnote2
+.local/share/Trash
+.local/share/nvim
+.local/state
+.local/share/krita
+.npm
+go/
+snap/
