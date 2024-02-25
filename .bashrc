@@ -124,5 +124,8 @@ eval "$(starship init bash)"
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export PATH=${PATH}:/usr/local:${HOME}/go/bin/:${HOME}/local/bin/codelldb/extension/adapter/
+if [ -f ~/.bash_priv_aliases ]; then
+    . ~/.bash_priv_aliases
+fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

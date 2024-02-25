@@ -1,5 +1,6 @@
 bindkey -v
 [[ -f $HOME/.bash_aliases ]] && source ~/.bash_aliases
+[[ -f $HOME/.bash_priv_aliases ]] && source ~/.bash_priv_aliases
 [[ -f $HOME/.shell_functions.sh ]] && source ~/.shell_functions.sh
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 

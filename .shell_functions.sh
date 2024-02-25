@@ -11,7 +11,6 @@ alert_timed() {
     time `sleep ${1} && notify-send "${2}"` &
 }
 
-
 fonts_list() {
     fc-list \
         | grep -ioE ": [^:]*$1[^:]+:" \

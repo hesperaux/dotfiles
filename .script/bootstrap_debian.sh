@@ -106,7 +106,7 @@ deps() {
         luajit libluajit-5.1-dev lua-mpack lua-lpeg libunibilium-dev libmsgpack-dev \
         libtermkey-dev ripgrep libtree-sitter0 libvterm0 lua-luv python3-greenlet python3-msgpack \
         python3-pynvim ruby black numlockx gcc-arm-none-eabi python3-venv hunspell lightdm \
-        bat zoxide tmux
+        bat zoxide tmux redshift
 
     #	xfce4-battery-plugin xfce4-clipman-plugin \
         #	xfce4-cpugraph-plugin xfce4-diskperf-plugin xfce4-mount-plugin \
