@@ -284,6 +284,9 @@ elif [[ "$1" == "fzf" ]]; then
 elif [[ "$1" == "starship" ]]; then
     install_starship
     exit
+elif [[ "$1" == "pyenv" ]]; then
+    install_pyenv
+    exit
 elif [[ "$1" == "dotfiles" ]]; then
     if [[ ! -d "${HOME}/.wallfiles" ]]; then
         git clone git@github.com:hesperaux/wallfiles.git --bare ~/.wallfiles
