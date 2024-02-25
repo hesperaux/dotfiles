@@ -112,9 +112,7 @@ base_install() {
         nettle-dev \
         libpipewire-0.3-dev \
         psmisc \
-        slop \
         golang \
-        npm \
         netctl \
         usbtop \
         btop \
@@ -139,12 +137,12 @@ base_install() {
         python3-pynvim \
         ruby \
         black \
-        numlockx \
         python3-venv \
         hunspell \
         bat \
         zoxide \
         tmux
+    sudo apt-get install --no-install-recommends npm
 }
 
 server_install() {
@@ -152,10 +150,6 @@ server_install() {
     sudo apt-get install \
     docker.io \
     docker-compose \
-    libvirt \
-    kvm \
-    qemu \
-    virt-manager \
     nfs-kernel-server \
     nfs-common
 }
@@ -240,6 +234,7 @@ desktop_install() {
         libtermkey-dev\
         gcc-arm-none-eabi \
         lightdm \
+        numlockx \
         redshift
 }
 
