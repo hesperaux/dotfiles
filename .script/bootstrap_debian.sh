@@ -2,6 +2,8 @@
 shopt -s expand_aliases
 source ~/.bash_aliases
 
+USERNAME=hesperaux
+
 install_polybar_themes () {
     mkdir ~/repos
     mkdir ~/git
@@ -14,7 +16,7 @@ install_polybar_themes () {
 install_zsh_with_zgenom () {
     sudo apt-get update
     sudo apt-get install zsh
-    cd ~/git && git clone https://github.com/jandamm/zgenom.git
+    cd ~/git && git clone https://github.com/jandamm/zgenom.git ~/.zgen
 }
 
 install_looking_glass_deps () {
@@ -47,12 +49,6 @@ install_rofi_calc () {
     exit
 }
 
-
-
-
-USERNAME=hesperaux
-
-
 install_brave_repo() {
     sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
     echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
@@ -78,44 +74,176 @@ install_neovim_git() {
     cmake --build build
 }
 
-
-deps() {
+base_install() {
     sudo apt-get update
-
-    sudo apt-get install build-essential apt-transport-https rofi flatpak curl \
-        geany mousepad snapd gdb-multiarch openocd qemu-system-arm \
-        i3lock flameshot cmake alacritty blender chromium cifs-utils \
-        codeblocks diffutils dnsutils fdisk fonts-firacode \
-        freecad geeqie git git-gui gitk gtk2-engines \
-        gtk2-engines-aurora gtk2-engines-cleanice gtk2-engines-murrine \
-        gtk2-engines-oxygen gtk2-engines-pixbuf gtk2-engines-sugar \
-        gtk3-engines-breeze gzip hdparm hostname i3 i3lock \
-        inetutils-telnet linux-image-amd64 linux-source lm-sensors \
-        mlocate mousepad nano ntfs-3g parted pciutils \
-        qalc rofi-dev libqalculate-dev samba screen sensible-utils snapd traceroute \
-        usbutils vlc xarchiver xbacklight xcb xcb-proto xclip \
-        psmisc feh xsel flatpak yaru-theme-gtk bridge-utils \
-        gpick libiw-dev blueman lxappearance picom python3-pip \
-        python3-xcffib python3-cairocffi libpangocairo-1.0-0 binutils-dev cmake \
-        fonts-dejavu-core libfontconfig-dev gcc g++ pkg-config libegl-dev libgl-dev \
-        libgles-dev libspice-protocol-dev nettle-dev libx11-dev libxcursor-dev \
-        libxi-dev libxinerama-dev libxpresent-dev libxss-dev libxkbcommon-dev \
-        libwayland-dev wayland-protocols libpipewire-0.3-dev libpulse-dev \
-        libsamplerate0-dev psmisc feh wmctrl slop golang npm netctl \
-        usbtop btop powerstat fonts-sil-andika gettext cmake ninja-build gettext unzip \
-        luajit libluajit-5.1-dev lua-mpack lua-lpeg libunibilium-dev libmsgpack-dev \
-        libtermkey-dev ripgrep libtree-sitter0 libvterm0 lua-luv python3-greenlet python3-msgpack \
-        python3-pynvim ruby black numlockx gcc-arm-none-eabi python3-venv hunspell lightdm \
-        bat zoxide tmux redshift
-
-    #	xfce4-battery-plugin xfce4-clipman-plugin \
-        #	xfce4-cpugraph-plugin xfce4-diskperf-plugin xfce4-mount-plugin \
-        #	xfce4-netload-plugin xfce4-pulseaudio-plugin \
-        #	xfce4-sensors-plugin xfce4-systemload-plugin \
-        #	xfce4-weather-plugin
+    sudo apt-get install \
+        build-essential \
+        apt-transport-https \
+        curl \
+        cmake \
+        cifs-utils \
+        diffutils \
+        dnsutils \
+        fdisk \
+        git \
+        gzip \
+        hdparm \
+        hostname \
+        inetutils-telnet \
+        lm-sensors \
+        mlocate \
+        nano \
+        ntfs-3g \
+        parted \
+        pciutils \
+        qalc \
+        libqalculate-dev \
+        samba \
+        screen \
+        traceroute \
+        usbutils \
+        psmisc \
+        bridge-utils \
+        python3-pip \
+        binutils-dev \
+        gcc \
+        g++ \
+        pkg-config \
+        nettle-dev \
+        libpipewire-0.3-dev \
+        psmisc \
+        slop \
+        golang \
+        npm \
+        netctl \
+        usbtop \
+        btop \
+        powerstat \
+        gettext\
+        ninja-build\
+        gettext \
+        unzip \
+        luajit \
+        libluajit-5.1-dev \
+        lua-mpack \
+        lua-lpeg \
+        libunibilium-dev \
+        libmsgpack-dev \
+        libtermkey-dev \
+        ripgrep \
+        libtree-sitter0 \
+        libvterm0 \
+        lua-luv \
+        python3-greenlet \
+        python3-msgpack \
+        python3-pynvim \
+        ruby \
+        black \
+        numlockx \
+        python3-venv \
+        hunspell \
+        bat \
+        zoxide \
+        tmux
 }
 
-brave() {
+server_install() {
+    base_install
+    sudo apt-get install \
+    docker.io \
+    docker-compose \
+    libvirt \
+    kvm \
+    qemu \
+    virt-manager \
+    nfs-kernel-server \
+    nfs-common
+}
+
+desktop_install() {
+    base_install
+    sudo apt-get install \
+        rofi \
+        flatpak \
+        geany \
+        mousepad \
+        snapd \
+        gdb-multiarch \
+        openocd \
+        qemu-system-arm \
+        i3lock\
+        flameshot \
+        alacritty \
+        blender \
+        fonts-firacode \
+        freecad\
+        geeqie \
+        git-gui \
+        gitk \
+        gtk2-engines \
+        gtk2-engines-aurora\
+        gtk2-engines-cleanice \
+        gtk2-engines-murrine \
+        gtk2-engines-oxygen\
+        gtk2-engines-pixbuf \
+        gtk2-engines-sugar \
+        gtk3-engines-breeze\
+        yaru-theme-gtk \
+        i3 \
+        i3lock \
+        linux-source \
+        mousepad \
+        rofi-dev \
+        sensible-utils \
+        snapd \
+        vlc \
+        xarchiver \
+        xbacklight \
+        xcb \
+        xcb-proto \
+        xclip \
+        feh \
+        xsel \
+        gpick\
+        libiw-dev \
+        blueman \
+        lxappearance \
+        picom \
+        python3-xcffib\
+        python3-cairocffi \
+        libpangocairo-1.0-0 \
+        fonts-dejavu-core\
+        libfontconfig-dev \
+        libegl-dev \
+        libgl-dev \
+        libgles-dev\
+        libspice-protocol-dev \
+        nettle-dev \
+        libx11-dev \
+        libxcursor-dev \
+        libxi-dev\
+        libxinerama-dev \
+        libxpresent-dev \
+        libxss-dev \
+        libxkbcommon-dev \
+        libwayland-dev\
+        wayland-protocols \
+        libpipewire-0.3-dev \
+        libpulse-dev \
+        libsamplerate0-dev\
+        feh \
+        wmctrl \
+        slop \
+        fonts-sil-andika \
+        libunibilium-dev \
+        libmsgpack-dev \
+        libtermkey-dev\
+        gcc-arm-none-eabi \
+        lightdm \
+        redshift
+}
+
+install_brave() {
 
     install_brave_repo
     sudo apt-get update
@@ -129,8 +257,11 @@ if [[ "$1" == "looking-glass" ]]; then
 elif [[ "$1" == "rofi-calc" ]]; then
     install_rofi_calc
     exit
-elif [[ "$1" == "apt" ]]; then
-    deps
+elif [[ "$1" == "desktop-packages" ]]; then
+    desktop_install
+    exit
+elif [[ "$1" == "server-packages" ]]; then
+    server_install
     exit
 elif [[ "$1" == "neovim" ]]; then
     install_neovim_git
@@ -142,7 +273,7 @@ elif [[ "$1" == "dotnet" ]]; then
     install_dotnet
     exit
 elif [[ "$1" == "brave" ]]; then
-    brave
+    install_brave
     exit
 elif [[ "$1" == "fzf" ]]; then
     install_fzf
@@ -163,7 +294,5 @@ elif [[ "$1" == "dotfiles" ]]; then
     fontfiles config --local status.showUntrackedFiles no
     exit
 else
-    echo "Options are: looking-glass, rofi-calc, apt, neovim, zsh, dotnet, brave, dotfiles"
-    echo "Using 'su' to add ${USERNAME} to sudo group."
-    su -c 'gpasswd -a ${USERNAME} sudo'
+    echo "Options are: looking-glass, rofi-calc, apt, neovim, zsh, dotnet, brave, dotfiles, desktop-packages, server-packages"
 fi;
