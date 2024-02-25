@@ -32,6 +32,10 @@ install_fzf() {
     ~/.fzf/install
 }
 
+install_starship() {
+    curl -sS https://starship.rs/install.sh | sh
+}
+
 install_rofi_calc () {
     DIR=`pwd`
     sudo apt-get install rofi-dev qalc libtool libtool-bin autoconf
@@ -272,6 +276,9 @@ elif [[ "$1" == "brave" ]]; then
     exit
 elif [[ "$1" == "fzf" ]]; then
     install_fzf
+    exit
+elif [[ "$1" == "starship" ]]; then
+    install_starship
     exit
 elif [[ "$1" == "dotfiles" ]]; then
     if [[ ! -d "${HOME}/.wallfiles" ]]; then
