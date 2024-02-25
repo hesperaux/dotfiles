@@ -4,6 +4,10 @@ source ~/.bash_aliases
 
 USERNAME=hesperaux
 
+install_pyenv() {
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+}
+
 install_polybar_themes () {
     mkdir ~/repos
     mkdir ~/git
