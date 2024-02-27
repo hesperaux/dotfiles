@@ -83,7 +83,7 @@ return {
                     "gradle_ls",
                     "grammarly",
                     "html",
-                    "htmx",
+                    -- "htmx",
                     "jsonls",
                     "jdtls",
                     "tsserver",

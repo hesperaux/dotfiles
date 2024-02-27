@@ -49,14 +49,23 @@ return {
                     path = "~/Documents/webclips",
                 },
             },
-
+            wiki_link_func = function(opts)
+                if opts.id == nil then
+                    return string.format("[[%s]]", opts.label)
+                elseif opts.label ~= opts.id then
+                    return string.format("[[%s|%s]]", opts.id, opts.label)
+                else
+                    return string.format("[[%s]]", opts.id)
+                end
+            end,
+            -- markdown_link_func = function(opts)
+            -- end,
             completion = {
                 nvim_cmp = true,
                 min_chars = 2,
                 -- * "current_dir" - put new notes in same directory as current buffer
                 -- * "notes_subdir" - put notes in the default notes subdirectory
                 new_notes_location = "notes_subdir",
-                prepend_note_id = true,
             },
 
             mappings = {
