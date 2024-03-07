@@ -3,7 +3,48 @@ return {
         "williamboman/mason.nvim",
         lazy = false,
         config = function()
-            require("mason").setup()
+            require("mason").setup({
+                PATH = "prepend", -- "skip" causes spawning error for omnisharp
+            })
+        end,
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        config = function()
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    "lua_ls",
+                    "ansiblels",
+                    "bashls",
+                    "clangd",
+                    -- "csharp_ls",
+                    "omnisharp",
+                    "clangd",
+                    "cmake",
+                    "cssls",
+                    "dockerls",
+                    "docker_compose_language_service",
+                    "eslint",
+                    "gopls",
+                    "gradle_ls",
+                    "grammarly",
+                    "html",
+                    -- "htmx",
+                    "jsonls",
+                    "jdtls",
+                    "tsserver",
+                    "marksman",
+                    "intelephense",
+                    "powershell_es",
+                    "pylsp",
+                    "rust_analyzer",
+                    "sqlls",
+                    "taplo",
+                    "vuels",
+                    "lemminx",
+                    "yamlls",
+                },
+            })
         end,
     },
     {
@@ -13,7 +54,18 @@ return {
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
             lspconfig.lua_ls.setup({ capabilities = capabilities })
-            lspconfig.csharp_ls.setup({ capabilities = capabilities })
+            -- lspconfig.csharp_ls.setup({ capabilities = capabilities })
+            local pid = vim.fn.getpid()
+
+            lspconfig.omnisharp.setup({
+                cmd = { 'omnisharp', '--languageserver', '--hostPID', tostring(pid) },
+                capabilities = capabilities,
+                enable_roslyn_analysers = true,
+                enable_import_completion = true,
+                organize_imports_on_format = true,
+                enable_decompilation_support = true,
+                filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props', 'csx', 'props', 'targets' }
+            })
             lspconfig.clangd.setup({
                 capabilities = capabilities,
                 cmd = {
@@ -25,6 +77,7 @@ return {
             lspconfig.bashls.setup({ capabilities = capabilities })
             lspconfig.pylsp.setup({ capabilities = capabilities })
             lspconfig.tsserver.setup({ capabilities = capabilities })
+            lspconfig.yamlls.setup({ capabilities = capabilities })
             vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -60,44 +113,6 @@ return {
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
                     vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
                 end,
-            })
-        end,
-    },
-    {
-        "williamboman/mason-lspconfig.nvim",
-        config = function()
-            require("mason-lspconfig").setup({
-                ensure_installed = {
-                    "lua_ls",
-                    "ansiblels",
-                    "bashls",
-                    "clangd",
-                    "csharp_ls",
-                    "clangd",
-                    "cmake",
-                    "cssls",
-                    "dockerls",
-                    "docker_compose_language_service",
-                    "eslint",
-                    "gopls",
-                    "gradle_ls",
-                    "grammarly",
-                    "html",
-                    -- "htmx",
-                    "jsonls",
-                    "jdtls",
-                    "tsserver",
-                    "marksman",
-                    "intelephense",
-                    "powershell_es",
-                    "pylsp",
-                    "rust_analyzer",
-                    "sqlls",
-                    "taplo",
-                    "vuels",
-                    "lemminx",
-                    "yamlls",
-                },
             })
         end,
     },
