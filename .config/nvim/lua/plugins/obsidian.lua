@@ -26,6 +26,7 @@ return {
         vim.keymap.set('n', "<leader>ow", ":ObsidianWorkspace<CR>", {})
         vim.keymap.set('n', "<leader>o1", ":ObsidianWorkspace notes<CR>", {})
         vim.keymap.set('n', "<leader>o2", ":ObsidianWorkspace work<CR>", {})
+        vim.keymap.set('n', "<leader>o3", ":ObsidianWorkspace yoyos<CR>", {})
         vim.keymap.set('n', "<leader>ol", ":ObsidianLink<CR>", {})
         vim.keymap.set('n', "<leader>os", ":ObsidianSearch<CR>", {})
         require("obsidian").setup({
