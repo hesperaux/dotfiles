@@ -49,6 +49,10 @@ return {
                     name = "webclips",
                     path = "~/Documents/webclips",
                 },
+                {
+                    name = "yoyos",
+                    path = "~/Documents/yoyos",
+                },
             },
             wiki_link_func = function(opts)
                 if opts.id == nil then
