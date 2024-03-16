@@ -78,6 +78,11 @@ return {
             lspconfig.pylsp.setup({ capabilities = capabilities })
             lspconfig.tsserver.setup({ capabilities = capabilities })
             lspconfig.yamlls.setup({ capabilities = capabilities })
+            lspconfig.lemminx.setup({
+                capabilities = capabilities,
+                filetypes = { "xml", "xsd", "xsl", "xslt", "svg", "xaml", "axaml" }
+            })
+
             vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
