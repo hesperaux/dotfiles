@@ -8,6 +8,6 @@ return {
             email = "hesperaux@gmail.com"
         })
         require("telescope").load_extension('find_template')
-        -- vim.keymap.set("n", "<leader>tt", ":TroubleToggle<CR>", {})
+        -- keymaps are in telescope.nvim
     end
 }

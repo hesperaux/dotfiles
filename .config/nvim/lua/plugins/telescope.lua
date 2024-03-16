@@ -21,7 +21,8 @@ return {
         vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
         vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
         vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-        vim.keymap.set('n', '<leader>fS', require('telescope.builtin').git_status, { desc = '' })
+        vim.keymap.set('n', '<leader>fS', require('telescope.builtin').git_status, { desc = 'Git Status' })
+        vim.keymap.set('n', '<leader>fT', ":Telescope find_template type=insert<CR>", { desc = '[F]ind [T]emplates' })
         vim.keymap.set('n', '<leader>fm', ":Telescope harpoon marks<CR>", { desc = 'Harpoon [M]arks' })
         vim.keymap.set("n", "<Leader>fr", "<CMD>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>",
             silent)
