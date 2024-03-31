@@ -68,7 +68,7 @@ install_dotnet() {
     sudo dpkg -i packages-microsoft-prod.deb
     rm packages-microsoft-prod.deb
     sudo apt-get update
-    sudo apt-get install dotnet-sdk-8.0 dotnet-sdk-7.0
+    sudo apt-get install dotnet-sdk-8.0
 }
 
 install_neovim_git() {
