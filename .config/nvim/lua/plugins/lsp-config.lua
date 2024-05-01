@@ -43,6 +43,7 @@ return {
                     "vuels",
                     "lemminx",
                     "yamlls",
+                    "terraformls"
                 },
             })
         end,
@@ -66,6 +67,7 @@ return {
                 enable_decompilation_support = true,
                 filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props', 'csx', 'props', 'targets' }
             })
+
             lspconfig.clangd.setup({
                 capabilities = capabilities,
                 cmd = {
@@ -78,6 +80,8 @@ return {
             lspconfig.pylsp.setup({ capabilities = capabilities })
             lspconfig.tsserver.setup({ capabilities = capabilities })
             lspconfig.yamlls.setup({ capabilities = capabilities })
+            lspconfig.terraformls.setup({ capabilities = capabilities })
+
             lspconfig.lemminx.setup({
                 capabilities = capabilities,
                 filetypes = { "xml", "xsd", "xsl", "xslt", "svg", "xaml", "axaml" }
