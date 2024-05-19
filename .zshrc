@@ -2,26 +2,13 @@ bindkey -v
 [[ -f $HOME/.bash_aliases ]] && source ~/.bash_aliases
 [[ -f $HOME/.bash_priv_aliases ]] && source ~/.bash_priv_aliases
 [[ -f $HOME/.shell_functions.sh ]] && source ~/.shell_functions.sh
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
-
-source ~/.zgen/zgenom.zsh
-
-# if the init script doesn't exist
-
-if ! zgenom saved; then
-
-  # specify plugins here
-  zgenom ohmyzsh
-
-  # generate the init script from plugins above
-  zgenom save
-fi
 
 export ZSH=$HOME/.config/zsh
 [[ -f $ZSH/history.zsh ]] && source $ZSH/history.zsh
 [[ -f $ZSH/plugins.zsh ]] && source $ZSH/plugins.zsh
 [[ -f $ZSH/zoxide.zsh ]] && source $ZSH/zoxide.zsh
 
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(starship init zsh)"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export PATH=${PATH}:/usr/local/:${HOME}/go/bin/:${HOME}/.local/bin/codelldb/extension/adapter/:${HOME}/.cargo/bin/
@@ -37,6 +24,5 @@ export FZF_DEFAULT_OPTS="
 	--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+[[ -d $PYENV_ROOT/bin ]] && eval "$(pyenv init -)"
 
