@@ -30,6 +30,7 @@ return {
         vim.keymap.set('n', "<leader>ol", ":ObsidianLink<CR>", {})
         vim.keymap.set('n', "<leader>os", ":ObsidianSearch<CR>", {})
         require("obsidian").setup({
+            new_notes_location = "notes_subdir",
             workspaces = {
                 {
                     name = "notes",
@@ -70,7 +71,6 @@ return {
                 min_chars = 2,
                 -- * "current_dir" - put new notes in same directory as current buffer
                 -- * "notes_subdir" - put notes in the default notes subdirectory
-                new_notes_location = "notes_subdir",
             },
 
             mappings = {
