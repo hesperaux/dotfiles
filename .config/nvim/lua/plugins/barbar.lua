@@ -29,7 +29,7 @@ return {
             -- Valid options to display the buffer index and -number are `true`, 'superscript' and 'subscript'
             buffer_index = false,
             buffer_number = false,
-            button = '',
+            button = '',
             -- Enables / disables diagnostic symbols
             diagnostics = {
                 [vim.diagnostic.severity.ERROR] = { enabled = true, icon = 'ﬀ ' },
@@ -50,7 +50,7 @@ return {
                 -- Requires `nvim-web-devicons` if `true`
                 enabled = true,
             },
-            separator = { left = '', right = '' },
+            separator = { left = '', right = '' },
 
             -- If true, add an additional separator at the end of the buffer list
             separator_at_end = false,
