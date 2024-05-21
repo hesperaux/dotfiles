@@ -11,7 +11,7 @@ export ZSH=$HOME/.config/zsh
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(starship init zsh)"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export PATH=${PATH}:/usr/local/:${HOME}/go/bin/:${HOME}/.local/bin/codelldb/extension/adapter/:${HOME}/.cargo/bin/
+export PATH=${PATH}:${HOME}/.dotnet/tools/:/usr/local/:${HOME}/go/bin/:${HOME}/.local/bin/codelldb/extension/adapter/:${HOME}/.cargo/bin/
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${HOME}/git/cuda/cuda-11.8/lib64
 export CUDA_HOME=${HOME}/git/cuda/cuda-11.8/
 export EDITOR=nvim
