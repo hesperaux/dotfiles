@@ -1,8 +1,12 @@
+#export TERM=screen-256color
 bindkey -v
+#export LC_CTYPE=en_US.UTF-8
 [[ -f $HOME/.bash_aliases ]] && source ~/.bash_aliases
 [[ -f $HOME/.bash_priv_aliases ]] && source ~/.bash_priv_aliases
+[[ -f $HOME/.shrc_priv ]] && source ~/.shrc_priv
 [[ -f $HOME/.shell_functions.sh ]] && source ~/.shell_functions.sh
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
+
 
 source ~/.zgen/zgenom.zsh
 
@@ -17,10 +21,10 @@ if ! zgenom saved; then
   zgenom save
 fi
 
-export ZSH=$HOME/.config/zsh
-[[ -f $ZSH/history.zsh ]] && source $ZSH/history.zsh
-[[ -f $ZSH/plugins.zsh ]] && source $ZSH/plugins.zsh
-[[ -f $ZSH/zoxide.zsh ]] && source $ZSH/zoxide.zsh
+export ZSH2=$HOME/.config/zsh
+[[ -f $ZSH2/history.zsh ]] && source $ZSH2/history.zsh
+[[ -f $ZSH2/plugins.zsh ]] && source $ZSH2/plugins.zsh
+[[ -f $ZSH2/zoxide.zsh ]] && source $ZSH2/zoxide.zsh
 
 eval "$(starship init zsh)"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
@@ -40,3 +44,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

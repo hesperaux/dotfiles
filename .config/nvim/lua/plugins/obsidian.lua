@@ -54,6 +54,7 @@ return {
                     path = "~/Documents/yoyos",
                 },
             },
+            new_notes_location = "notes_subdir",
             wiki_link_func = function(opts)
                 if opts.id == nil then
                     return string.format("[[%s]]", opts.label)
@@ -70,7 +71,7 @@ return {
                 min_chars = 2,
                 -- * "current_dir" - put new notes in same directory as current buffer
                 -- * "notes_subdir" - put notes in the default notes subdirectory
-                new_notes_location = "notes_subdir",
+                -- new_notes_location = "notes_subdir",
             },
 
             mappings = {
