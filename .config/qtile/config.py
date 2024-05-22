@@ -391,7 +391,7 @@ extension_defaults = widget_defaults.copy()
 
 font_defaults = dict(
     font="0xProto Nerd Font",
-    fontsize=16
+    fontsize=14
 )
 
 
@@ -576,6 +576,35 @@ def net(bg_color=colors["bg"]):
         ],
         background=bg_color,
         **font_defaults,
+        prefix="M",
+        format='{down:6.2f}{down_suffix}↓{up:6.2f}{up_suffix}↑',
+        padding=0
+    )
+
+
+def read_variable(filename):
+    varfile = os.path.expanduser(filename)
+    if os.path.exists(varfile):
+        with open(varfile) as f:
+            return f.readline().strip()
+
+
+def get_weather(bg_color=colors["bg"]):
+    key = read_variable("~/.config/qtile/openweather.key")
+    if not key:
+        return widget.Spacer(length=0)
+
+    cityid = read_variable("~/.config/qtile/openweather.cityid")
+    if not cityid:
+        return widget.Spacer(length=0)
+
+    return widget.OpenWeather(
+        background=bg_color,
+        api_key=key,
+        cityid=cityid,
+        metric=False,
+        format='{icon} {temp}°{units_temperature} ',
+        **font_defaults,
     )
 
 
@@ -749,6 +778,7 @@ def get_screen_bar(screen_number):
                 get_wlan_widget(colors["color3"]),
                 get_separator_widget("", colors["color3"], colors["bg"]),
                 net(colors["bg"]),
+                get_weather(colors["bg"]),
                 get_separator_widget("", colors["bg"]),
                 get_gap_widget(5),
                 get_separator_widget("", colors["bg"]),

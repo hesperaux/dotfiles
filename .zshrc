@@ -7,7 +7,6 @@ bindkey -v
 [[ -f $HOME/.shell_functions.sh ]] && source ~/.shell_functions.sh
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
-
 source ~/.zgen/zgenom.zsh
 
 # if the init script doesn't exist
@@ -26,9 +25,10 @@ export ZSH2=$HOME/.config/zsh
 [[ -f $ZSH2/plugins.zsh ]] && source $ZSH2/plugins.zsh
 [[ -f $ZSH2/zoxide.zsh ]] && source $ZSH2/zoxide.zsh
 
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(starship init zsh)"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export PATH=${PATH}:/usr/local/:${HOME}/go/bin/:${HOME}/.local/bin/codelldb/extension/adapter/:${HOME}/.cargo/bin/
+export PATH=${PATH}:${HOME}/.dotnet/tools/:/usr/local/:${HOME}/go/bin/:${HOME}/.local/bin/codelldb/extension/adapter/:${HOME}/.cargo/bin/
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${HOME}/git/cuda/cuda-11.8/lib64
 export CUDA_HOME=${HOME}/git/cuda/cuda-11.8/
 export EDITOR=nvim
@@ -41,9 +41,7 @@ export FZF_DEFAULT_OPTS="
 	--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
+[[ -d $PYENV_ROOT/bin ]] && eval "$(pyenv init -)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

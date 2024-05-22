@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-theme="$HOME/.config/rofi/style.rasi"
+theme="$HOME/.config/rofi/nerdfonts.rasi"
 
 # if argument is passed, use it as csv, otherwise, look for file relative to dir
 [ $# -eq 0 ] && {
