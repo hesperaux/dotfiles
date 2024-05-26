@@ -15,6 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.cmd.set("number")
 vim.cmd.set("relativenumber")
 vim.cmd.set("signcolumn=number")
+vim.cmd.set("termguicolors")
 require("lazy").setup("plugins")
 
 
