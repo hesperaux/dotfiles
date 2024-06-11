@@ -195,6 +195,7 @@ desktop_install() {
         gtk2-engines-sugar \
         gtk3-engines-breeze\
         yaru-theme-gtk \
+        gtk-chtheme \
         i3 \
         i3lock \
         linux-source \
