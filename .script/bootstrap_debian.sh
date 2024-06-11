@@ -63,6 +63,10 @@ install_brave_repo() {
 
 }
 
+install_rust() {
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+}
+
 install_dotnet() {
     wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
@@ -329,6 +333,9 @@ elif [[ "$1" == "qtile" ]]; then
 elif [[ "$1" == "pywal" ]]; then
     install_pywal
     exit
+elif [[ "$1" == "rust" ]]; then
+    install_rust
+    exit
 elif [[ "$1" == "dotfiles" ]]; then
     if [[ ! -d "${HOME}/.wallfiles" ]]; then
         git clone git@github.com:hesperaux/wallfiles.git --bare ~/.wallfiles
@@ -345,5 +352,5 @@ elif [[ "$1" == "dotfiles" ]]; then
     fontfiles config --local status.showUntrackedFiles no
     exit
 else
-    echo "Options are: looking-glass, rofi-calc, fzf, starship, qtile, pywal, pyenv, neovim, zsh, dotnet, brave, dotfiles, desktop-packages, server-packages"
+    echo "Options are: looking-glass, rofi-calc, fzf, starship, qtile, pywal, pyenv, neovim, zsh, rust, dotnet, brave, dotfiles, desktop-packages, server-packages"
 fi;
