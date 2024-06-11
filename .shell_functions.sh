@@ -20,3 +20,17 @@ fonts_list() {
         | uniq
 }
 
+awsp() {
+    if [ ! -z "${1}" ]; then
+        export AWS_PROFILE="rfideas-dev"
+    fi
+    export AWS_PROFILE="${1}"
+}
+
+awsr() {
+    if [ ! -z "${1}" ]; then
+        export AWS_REGION="us-west-2"
+    fi
+    export AWS_REGION="${1}"
+
+}

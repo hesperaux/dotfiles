@@ -61,3 +61,10 @@ disabled = false
 
 [lua]
 disabled = true
+
+[aws]
+disabled = false
+format = '[$symbol($profile )(\($region\) )(\[$duration\] )]($style)'
+style = 'bold yellow'
+region_aliases = { 'us-west-2' = 'uw2' }
+force_display = true
