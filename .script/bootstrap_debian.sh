@@ -253,6 +253,19 @@ install_brave() {
     sudo apt-get install brave-browser
 }
 
+install_qtile() {
+
+    sudo apt-get update
+    sudo apt-get install psutils libghc-iwlib-dev
+    sudo mkdir -p /opt/qtile
+    sudo chown ${USERNAME}:${USERNAME} /opt/qtile
+    python3 -m venv /opt/qtile/venv
+    /opt/qtile/venv/bin/pip install qtile
+    /opt/qtile/venv/bin/pip install psutil
+    /opt/qtile/venv/bin/pip install iwlib
+    /opt/qtile/venv/bin/pip install pywal
+}
+
 
 if [[ "$1" == "looking-glass" ]]; then
     install_looking_glass_deps
@@ -287,6 +300,9 @@ elif [[ "$1" == "starship" ]]; then
 elif [[ "$1" == "pyenv" ]]; then
     install_pyenv
     exit
+elif [[ "$1" == "qtile" ]]; then
+    install_qtile
+    exit
 elif [[ "$1" == "dotfiles" ]]; then
     if [[ ! -d "${HOME}/.wallfiles" ]]; then
         git clone git@github.com:hesperaux/wallfiles.git --bare ~/.wallfiles
@@ -303,5 +319,5 @@ elif [[ "$1" == "dotfiles" ]]; then
     fontfiles config --local status.showUntrackedFiles no
     exit
 else
-    echo "Options are: looking-glass, rofi-calc, apt, neovim, zsh, dotnet, brave, dotfiles, desktop-packages, server-packages"
+    echo "Options are: looking-glass, rofi-calc, fzf, starship, pyenv, neovim, zsh, dotnet, brave, dotfiles, desktop-packages, server-packages"
 fi;
