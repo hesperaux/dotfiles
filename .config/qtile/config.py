@@ -440,6 +440,8 @@ def get_battery_widget(bg_color=colors["bg"]):
         return widget.Battery(battery=0, **conf)
     elif is_host("rfi-linux-dev-02"):
         return widget.Battery(battery=0, **conf)
+    elif is_host("dbieber-work-p16"):
+        return widget.Battery(battery=0, **conf)
     else:
         return widget.Spacer(length=0)
 

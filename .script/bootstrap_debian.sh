@@ -2,7 +2,7 @@
 shopt -s expand_aliases
 source ~/.bash_aliases
 
-USERNAME=hesperaux
+USERNAME=`whoami`
 
 install_pyenv() {
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -243,7 +243,8 @@ desktop_install() {
         gcc-arm-none-eabi \
         lightdm \
         numlockx \
-        redshift
+        redshift \
+        pavucontrol
 }
 
 install_brave() {
@@ -256,14 +257,36 @@ install_brave() {
 install_qtile() {
 
     sudo apt-get update
-    sudo apt-get install psutils libghc-iwlib-dev
-    sudo mkdir -p /opt/qtile
-    sudo chown ${USERNAME}:${USERNAME} /opt/qtile
-    python3 -m venv /opt/qtile/venv
+    sudo apt-get install psutils libghc-iwlib-dev dbus-next libnotify-bin
+    # if /opt/qtile doesn't exist, create it and set permissions, then make a venv
+    if [ ! -e /opt/qtile/ ]
+    then
+        sudo mkdir -p /opt/qtile
+        sudo chown ${USERNAME}:${USERNAME} /opt/qtile
+    fi
+    if [ ! -e /opt/qtile/venv ]
+    then
+        python3 -m venv /opt/qtile/venv
+    fi
     /opt/qtile/venv/bin/pip install qtile
     /opt/qtile/venv/bin/pip install psutil
     /opt/qtile/venv/bin/pip install iwlib
+    /opt/qtile/venv/bin/pip install pulsectl_asyncio
     /opt/qtile/venv/bin/pip install pywal
+}
+
+install_pywal() {
+    # if /opt/pywal doesn't exist, create it and set permissions, then make a venv
+    if [ ! -e /opt/pywal/ ]
+    then
+        sudo mkdir -p /opt/pywal
+        sudo chown ${USERNAME}:${USERNAME} /opt/pywal
+    fi
+    if [ ! -e /opt/pywal/venv ]
+    then
+        python3 -m venv /opt/pywal/venv
+    fi
+    /opt/pywal/venv/bin/pip install pywal
 }
 
 
@@ -303,6 +326,9 @@ elif [[ "$1" == "pyenv" ]]; then
 elif [[ "$1" == "qtile" ]]; then
     install_qtile
     exit
+elif [[ "$1" == "pywal" ]]; then
+    install_pywal
+    exit
 elif [[ "$1" == "dotfiles" ]]; then
     if [[ ! -d "${HOME}/.wallfiles" ]]; then
         git clone git@github.com:hesperaux/wallfiles.git --bare ~/.wallfiles
@@ -319,5 +345,5 @@ elif [[ "$1" == "dotfiles" ]]; then
     fontfiles config --local status.showUntrackedFiles no
     exit
 else
-    echo "Options are: looking-glass, rofi-calc, fzf, starship, pyenv, neovim, zsh, dotnet, brave, dotfiles, desktop-packages, server-packages"
+    echo "Options are: looking-glass, rofi-calc, fzf, starship, qtile, pywal, pyenv, neovim, zsh, dotnet, brave, dotfiles, desktop-packages, server-packages"
 fi;
