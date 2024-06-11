@@ -248,7 +248,8 @@ desktop_install() {
         lightdm \
         numlockx \
         redshift \
-        pavucontrol
+        pavucontrol \
+        thunar
 }
 
 install_brave() {
@@ -261,7 +262,9 @@ install_brave() {
 install_qtile() {
 
     sudo apt-get update
-    sudo apt-get install psutils libghc-iwlib-dev dbus-next libnotify-bin
+    sudo apt-get install psutils libghc-iwlib-dev libnotify-bin 
+    #libdbus-glib-1-dev libgirepository1.0-dev
+
     # if /opt/qtile doesn't exist, create it and set permissions, then make a venv
     if [ ! -e /opt/qtile/ ]
     then
@@ -276,7 +279,7 @@ install_qtile() {
     /opt/qtile/venv/bin/pip install psutil
     /opt/qtile/venv/bin/pip install iwlib
     /opt/qtile/venv/bin/pip install pulsectl_asyncio
-    /opt/qtile/venv/bin/pip install pywal
+    /opt/qtile/venv/bin/pip install dbus-next
 }
 
 install_pywal() {
