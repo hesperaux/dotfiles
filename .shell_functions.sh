@@ -21,16 +21,25 @@ fonts_list() {
 }
 
 awsp() {
-    if [ ! -z "${1}" ]; then
+    if [ -z "${1}" ]; then
+        echo "Setting profile to 'rfideas-dev'"
         export AWS_PROFILE="rfideas-dev"
+    else {
+        echo "Setting profile to '${1}'"
+        export AWS_PROFILE="${1}"
+    }
     fi
-    export AWS_PROFILE="${1}"
 }
 
 awsr() {
-    if [ ! -z "${1}" ]; then
+    if [ -z "${1}" ]; then
+        echo "Setting region to 'us-west-2'"
         export AWS_REGION="us-west-2"
+        return;
+    else {
+        echo "Setting region to '${1}'"
+        export AWS_REGION="${1}"
+    }
     fi
-    export AWS_REGION="${1}"
 
 }
