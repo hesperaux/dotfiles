@@ -8,7 +8,11 @@ network=$(netctl list | sed 's/\*//gi' | rofi \
     -show -dmenu \
     -theme ${theme})
 
-if [ $this_network -seq '' ]; then
+if [ -z "$network" ]; then
+    exit 0
+fi
+
+if [ -z "$this_network" ]; then
   sudo netctl start ${network}
 else
   sudo netctl stop ${this_network}
