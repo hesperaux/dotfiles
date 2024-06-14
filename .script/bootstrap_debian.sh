@@ -153,7 +153,8 @@ base_install() {
         hunspell \
         bat \
         zoxide \
-        tmux
+        tmux \
+        jq
     sudo apt-get install --no-install-recommends npm
 }
 
