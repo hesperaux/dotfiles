@@ -325,6 +325,15 @@ groups.append(
                 y=0.1,
                 opacity=0.9,
             ),
+            DropDown(
+                "notes",
+                "alacritty -e tmuxa notes",
+                width=0.8,
+                height=0.8,
+                x=0.1,
+                y=0.1,
+                opacity=0.9,
+            ),
         ],
     )
 )
@@ -339,7 +348,7 @@ keys.extend(
                 Key([], "t", lazy.group["scratchpad"].dropdown_toggle("top")),
                 # Key([], "s", lazy.group["scratchpad"].dropdown_toggle("volume")),
                 Key([], "c", lazy.group["scratchpad"].dropdown_toggle("camera")),
-                #  Key([], "n", lazy.group["scratchpad"].dropdown_toggle("notes")),
+                Key([], "n", lazy.group["scratchpad"].dropdown_toggle("notes")),
             ],
         ),
     ]

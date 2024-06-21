@@ -29,6 +29,8 @@ vim.keymap.set('n', '<leader>nd', ':NoiceDismiss<CR>', {})
 -- Move to previous/next
 vim.keymap.set('n', '<leader>n', '<Cmd>BufferPrevious<CR>', {})
 vim.keymap.set('n', '<leader>N', '<Cmd>BufferNext<CR>', {})
+vim.keymap.set('n', '<C-,>', '<Cmd>BufferPrevious<CR>', {})
+vim.keymap.set('n', '<C-.>', '<Cmd>BufferNext<CR>', {})
 -- vim.keymap.set('n', '<C-H>', '<Cmd>BufferPrevious<CR>', opts)
 -- vim.keymap.set('n', '<C-L>', '<Cmd>BufferNext<CR>', opts)
 -- Re-order to previous/next
