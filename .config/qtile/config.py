@@ -121,7 +121,8 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    Key([mod], "space", lazy.layout.next(),
+        desc="Move window focus to other window"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
     Key(
@@ -137,7 +138,8 @@ keys = [
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
-    Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
+    Key([mod, "control"], "h", lazy.layout.grow_left(),
+        desc="Grow window to the left"),
     Key(
         [mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"
     ),
@@ -179,7 +181,16 @@ keys = [
     ),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "comma", lazy.to_screen(0), desc="Keyboard focus to monitor 1"),
-    Key([mod], "period", lazy.to_screen(1), desc="Keyboard focus to monitor 2"),
+    Key([mod], "period", lazy.to_screen(1),
+        desc="Keyboard focus to monitor 2"),
+    Key([mod, "control"], "1", lazy.to_screen(
+        0), desc="Keyboard focus to monitor 1"),
+    Key([mod, "control"], "2", lazy.to_screen(
+        1), desc="Keyboard focus to monitor 2"),
+    Key([mod, "control"], "3", lazy.to_screen(
+        2), desc="Keyboard focus to monitor 3"),
+    Key([mod, "control"], "4", lazy.to_screen(
+        3), desc="Keyboard focus to monitor 4"),
     Key(
         [],
         "XF86AudioLowerVolume",
@@ -205,7 +216,8 @@ keys = [
         desc="Play/Pause player",
     ),
     Key([], "XF86AudioNext", lazy.spawn("playerctl next"), desc="Skip to next"),
-    Key([], "XF86AudioPrev", lazy.spawn("playerctl previous"), desc="Skip to previous"),
+    Key([], "XF86AudioPrev", lazy.spawn(
+        "playerctl previous"), desc="Skip to previous"),
     Key(
         [],
         "XF86MonBrightnessDown",
@@ -219,10 +231,13 @@ keys = [
         desc="Increase display brightness",
     ),
     Key([mod], "e", lazy.spawn("thunar"), desc="Open file browser"),
-    Key([mod, "shift"], "s", lazy.spawn("flameshot gui"), desc="Take screenshot"),
-    Key([mod, "shift"], "w", lazy.spawn(".script/setwal.sh"), desc="Swap Wallpaper"),
+    Key([mod, "shift"], "s", lazy.spawn(
+        "flameshot gui"), desc="Take screenshot"),
+    Key([mod, "shift"], "w", lazy.spawn(
+        ".script/setwal.sh"), desc="Swap Wallpaper"),
     Key([mod], "d", lazy.spawn(".config/rofi/main.sh"), desc="Run rofi"),
-    Key([mod], "equal", lazy.spawn(".config/rofi/calc.sh"), desc="Launch Calculator"),
+    Key([mod], "equal", lazy.spawn(
+        ".config/rofi/calc.sh"), desc="Launch Calculator"),
     Key(
         [mod, "shift"],
         "p",
@@ -248,7 +263,8 @@ keys = [
         lazy.layout.delete(),
         desc="Remove column from layout",
     ),
-    Key([mod, "shift"], "bracketright", lazy.layout.add(), desc="Add column to layout"),
+    Key([mod, "shift"], "bracketright",
+        lazy.layout.add(), desc="Add column to layout"),
     # KEY CHORDS
 ]
 
@@ -256,18 +272,22 @@ groups = [
     Group("  "),
     Group(
         " 爵 ",
-        matches=[Match(wm_class=["Google-chrome", "Firefox-esr", "Brave-browser"])],
+        matches=[
+            Match(wm_class=["Google-chrome", "Firefox-esr", "Brave-browser"])],
     ),
     Group("  ",
-        matches=[Match(wm_class=["Caprine", "discord", "Microsoft Teams - Preview"])],
-    ),
+          matches=[Match(wm_class=["Caprine", "discord",
+                         "Microsoft Teams - Preview"])],
+          ),
     Group(
         "  ",
         matches=[
-            Match(wm_class=["jetbrains-pycharm", "jetbrains-rider", "jetbrains-clion"])
+            Match(wm_class=["jetbrains-pycharm",
+                  "jetbrains-rider", "jetbrains-clion"])
         ],
     ),
-    Group("   ", matches=[Match(wm_class=["Virt-manager", "looking-glass-client"])]),
+    Group("   ", matches=[
+          Match(wm_class=["Virt-manager", "looking-glass-client"])]),
     Group("   ", matches=[Match(wm_class=["obsidian"])]),
     Group("  ", matches=[Match(wm_class=["Blender", "geeqie"])]),
     Group("  ", matches=[Match(wm_class=["vlc", "Parole"])], layout="grid"),
@@ -306,7 +326,8 @@ groups.append(
     ScratchPad(
         "scratchpad",
         [
-            DropDown("term", "alacritty", width=0.4, x=0.3, y=0.2, opacity=0.9),
+            DropDown("term", "alacritty", width=0.4,
+                     x=0.3, y=0.2, opacity=0.9),
             # DropDown("volume", "pavucontrol", width=0.5, x=0.3, y=0.3, opacity=0.9),
             DropDown(
                 "camera",
@@ -767,6 +788,93 @@ def clock(bg_color=colors["bg"]):
     )
 
 
+def get_primary_bar(style_dict):
+    return bar.Bar(
+        [
+            group_box(colors["bg"]),
+            get_separator_widget("", colors["bg"]),
+            get_gap_widget(5),
+            get_separator_widget("", colors["color3"]),
+            current_layout(colors["color3"]),
+            window_count(colors["color3"]),
+            get_separator_widget("", colors["color3"], colors["bg"]),
+            window_name(colors["bg"]),
+            get_separator_widget("", colors["bg"]),
+            get_gap_widget(5),
+            get_separator_widget("", colors["color3"]),
+            get_wlan_widget(colors["color3"]),
+            get_separator_widget("", colors["color3"], colors["bg"]),
+            net(colors["bg"]),
+            get_weather(colors["bg"]),
+            get_separator_widget("", colors["bg"]),
+            get_gap_widget(5),
+            get_separator_widget("", colors["bg"]),
+            cpu_graph(colors["bg"]),
+            memory_graph(colors["bg"]),
+            get_gap_widget(5, colors["bg"]),
+            get_separator_widget("", colors["bg"], colors["color5"]),
+            df_root(colors["bg"], colors["color5"]),
+            df_home(colors["bg"], colors["color5"]),
+            get_separator_widget("", colors["color5"]),
+            get_gap_widget(10),
+            pulse_volume(),
+            get_gap_widget(5),
+            get_systray(),
+            get_gap_widget(5),
+            notify(),
+            get_gap_widget(5),
+            get_separator_widget("", colors["bg"]),
+            get_battery_widget(),
+            clock(),
+        ],
+        30,
+        **style_dict
+    )
+
+
+def get_secondary_bar(style_dict):
+    return bar.Bar(
+        [
+            group_box(colors["bg"]),
+            get_separator_widget("", colors["bg"]),
+            get_gap_widget(5),
+            get_separator_widget("", colors["color3"]),
+            current_layout(colors["color3"]),
+            window_count(colors["color3"]),
+            get_separator_widget("", colors["color3"], colors["bg"]),
+            window_name(colors["bg"]),
+            get_separator_widget("", colors["bg"]),
+            get_gap_widget(5),
+            get_separator_widget("", colors["color3"]),
+            get_wlan_widget(colors["color3"]),
+            get_separator_widget("", colors["color3"], colors["bg"]),
+            net(colors["bg"]),
+            get_separator_widget("", colors["bg"]),
+            get_gap_widget(5),
+            get_separator_widget("", colors["bg"]),
+            cpu_graph(colors["bg"]),
+            memory_graph(colors["bg"]),
+            get_gap_widget(5, colors["bg"]),
+            get_separator_widget("", colors["bg"], colors["color5"]),
+            df_root(colors["bg"], colors["color5"]),
+            df_home(colors["bg"], colors["color5"]),
+            get_separator_widget("", colors["color5"]),
+            get_gap_widget(10),
+            pulse_volume(),
+            get_gap_widget(5),
+            get_systray(),
+            get_gap_widget(5),
+            notify(),
+            get_gap_widget(5),
+            get_separator_widget("", colors["bg"]),
+            get_battery_widget(),
+            clock(),
+        ],
+        30,
+        **style_dict
+    )
+
+
 def get_screen_bar(screen_number):
     conf = dict(
         border_width=[0, 0, 0, 0],  # Draw top and bottom borders
@@ -775,88 +883,9 @@ def get_screen_bar(screen_number):
     )
 
     if screen_number == 0:
-        return bar.Bar(
-            [
-                group_box(colors["bg"]),
-                get_separator_widget("", colors["bg"]),
-                get_gap_widget(5),
-                get_separator_widget("", colors["color3"]),
-                current_layout(colors["color3"]),
-                window_count(colors["color3"]),
-                get_separator_widget("", colors["color3"], colors["bg"]),
-                window_name(colors["bg"]),
-                get_separator_widget("", colors["bg"]),
-                get_gap_widget(5),
-                get_separator_widget("", colors["color3"]),
-                get_wlan_widget(colors["color3"]),
-                get_separator_widget("", colors["color3"], colors["bg"]),
-                net(colors["bg"]),
-                get_weather(colors["bg"]),
-                get_separator_widget("", colors["bg"]),
-                get_gap_widget(5),
-                get_separator_widget("", colors["bg"]),
-                cpu_graph(colors["bg"]),
-                memory_graph(colors["bg"]),
-                get_gap_widget(5, colors["bg"]),
-                get_separator_widget("", colors["bg"], colors["color5"]),
-                df_root(colors["bg"], colors["color5"]),
-                df_home(colors["bg"], colors["color5"]),
-                get_separator_widget("", colors["color5"]),
-                get_gap_widget(10),
-                pulse_volume(),
-                get_gap_widget(5),
-                get_systray(),
-                get_gap_widget(5),
-                notify(),
-                get_gap_widget(5),
-                get_separator_widget("", colors["bg"]),
-                get_battery_widget(),
-                clock(),
-            ],
-            30,
-            **conf
-        )
-    elif screen_number == 1:
-        return bar.Bar(
-            [
-                group_box(colors["bg"]),
-                get_separator_widget("", colors["bg"]),
-                get_gap_widget(5),
-                get_separator_widget("", colors["color3"]),
-                current_layout(colors["color3"]),
-                window_count(colors["color3"]),
-                get_separator_widget("", colors["color3"], colors["bg"]),
-                window_name(colors["bg"]),
-                get_separator_widget("", colors["bg"]),
-                get_gap_widget(5),
-                get_separator_widget("", colors["color3"]),
-                get_wlan_widget(colors["color3"]),
-                get_separator_widget("", colors["color3"], colors["bg"]),
-                net(colors["bg"]),
-                get_separator_widget("", colors["bg"]),
-                get_gap_widget(5),
-                get_separator_widget("", colors["bg"]),
-                cpu_graph(colors["bg"]),
-                memory_graph(colors["bg"]),
-                get_gap_widget(5, colors["bg"]),
-                get_separator_widget("", colors["bg"], colors["color5"]),
-                df_root(colors["bg"], colors["color5"]),
-                df_home(colors["bg"], colors["color5"]),
-                get_separator_widget("", colors["color5"]),
-                get_gap_widget(10),
-                pulse_volume(),
-                get_gap_widget(5),
-                get_systray(),
-                get_gap_widget(5),
-                notify(),
-                get_gap_widget(5),
-                get_separator_widget("", colors["bg"]),
-                get_battery_widget(),
-                clock(),
-            ],
-            30,
-            **conf
-        )
+        return get_primary_bar(conf)
+    else:
+        return get_secondary_bar(conf)
 
 
 dgroups_key_binder = None
