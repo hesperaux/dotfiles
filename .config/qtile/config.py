@@ -235,25 +235,25 @@ keys = [
         "flameshot gui"), desc="Take screenshot"),
     Key([mod, "shift"], "w", lazy.spawn(
         ".script/setwal.sh"), desc="Swap Wallpaper"),
-    Key([mod], "d", lazy.spawn(".config/rofi/main.sh"), desc="Run rofi"),
+    Key([mod], "d", lazy.spawn(".config/rofi/script/main.sh"), desc="Run rofi"),
     Key([mod], "equal", lazy.spawn(
-        ".config/rofi/calc.sh"), desc="Launch Calculator"),
+        ".config/rofi/script/calc.sh"), desc="Launch Calculator"),
     Key(
         [mod, "shift"],
         "p",
-        lazy.spawn(".config/rofi/powermenu.sh"),
+        lazy.spawn(".config/rofi/script/powermenu.sh"),
         desc="Open power menu",
     ),
     Key(
         [mod, "shift"],
         "n",
-        lazy.spawn(".config/rofi/netselect.sh"),
+        lazy.spawn(".config/rofi/script/netselect.sh"),
         desc="Open network menu",
     ),
     Key(
         [mod, "shift"],
         "u",
-        lazy.spawn(".config/rofi/rofi-nerdfonts.sh"),
+        lazy.spawn(".config/rofi/script/rofi-nerdfonts.sh"),
         desc="Select symbol",
     ),
     # Add/remove columns to Matrix layout
