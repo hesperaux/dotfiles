@@ -152,6 +152,7 @@ base_install() {
         python3-venv \
         hunspell \
         bat \
+        exa \
         zoxide \
         tmux \
         jq
