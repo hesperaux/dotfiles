@@ -11,6 +11,9 @@ triple='  '
 quad='   '
 cancel='ﰸ'
 
+yes=''
+no=''
+
 # Rofi CMD
 rofi_cmd() {
 	rofi -dmenu -theme ${theme}
@@ -31,7 +34,7 @@ confirm_cmd() {
 
 # Ask for confirmation
 confirm_exit() {
-	echo -e "$yes\n$no" | confirm_cmd
+	echo "$yes\n$no" | confirm_cmd
 }
 
 # Pass variables to rofi dmenu
