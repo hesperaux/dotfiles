@@ -121,8 +121,7 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(),
-        desc="Move window focus to other window"),
+    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
     Key(
@@ -138,8 +137,7 @@ keys = [
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
-    Key([mod, "control"], "h", lazy.layout.grow_left(),
-        desc="Grow window to the left"),
+    Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
     Key(
         [mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"
     ),
@@ -181,16 +179,11 @@ keys = [
     ),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "comma", lazy.to_screen(0), desc="Keyboard focus to monitor 1"),
-    Key([mod], "period", lazy.to_screen(1),
-        desc="Keyboard focus to monitor 2"),
-    Key([mod, "control"], "1", lazy.to_screen(
-        0), desc="Keyboard focus to monitor 1"),
-    Key([mod, "control"], "2", lazy.to_screen(
-        1), desc="Keyboard focus to monitor 2"),
-    Key([mod, "control"], "3", lazy.to_screen(
-        2), desc="Keyboard focus to monitor 3"),
-    Key([mod, "control"], "4", lazy.to_screen(
-        3), desc="Keyboard focus to monitor 4"),
+    Key([mod], "period", lazy.to_screen(1), desc="Keyboard focus to monitor 2"),
+    Key([mod, "control"], "1", lazy.to_screen(0), desc="Keyboard focus to monitor 1"),
+    Key([mod, "control"], "2", lazy.to_screen(1), desc="Keyboard focus to monitor 2"),
+    Key([mod, "control"], "3", lazy.to_screen(2), desc="Keyboard focus to monitor 3"),
+    Key([mod, "control"], "4", lazy.to_screen(3), desc="Keyboard focus to monitor 4"),
     Key(
         [],
         "XF86AudioLowerVolume",
@@ -216,8 +209,7 @@ keys = [
         desc="Play/Pause player",
     ),
     Key([], "XF86AudioNext", lazy.spawn("playerctl next"), desc="Skip to next"),
-    Key([], "XF86AudioPrev", lazy.spawn(
-        "playerctl previous"), desc="Skip to previous"),
+    Key([], "XF86AudioPrev", lazy.spawn("playerctl previous"), desc="Skip to previous"),
     Key(
         [],
         "XF86MonBrightnessDown",
@@ -231,13 +223,21 @@ keys = [
         desc="Increase display brightness",
     ),
     Key([mod], "e", lazy.spawn("thunar"), desc="Open file browser"),
-    Key([mod, "shift"], "s", lazy.spawn(
-        "flameshot gui"), desc="Take screenshot"),
-    Key([mod, "shift"], "w", lazy.spawn(
-        ".script/setwal.sh"), desc="Swap Wallpaper"),
+    Key([mod, "shift"], "s", lazy.spawn("flameshot gui"), desc="Take screenshot"),
+    Key([mod, "shift"], "w", lazy.spawn(".script/setwal.sh"), desc="Swap Wallpaper"),
     Key([mod], "d", lazy.spawn(".config/rofi/script/main.sh"), desc="Run rofi"),
-    Key([mod], "equal", lazy.spawn(
-        ".config/rofi/script/calc.sh"), desc="Launch Calculator"),
+    Key(
+        [mod],
+        "m",
+        lazy.spawn(".config/rofi/script/displays.sh"),
+        desc="Change displays",
+    ),
+    Key(
+        [mod],
+        "equal",
+        lazy.spawn(".config/rofi/script/calc.sh"),
+        desc="Launch Calculator",
+    ),
     Key(
         [mod, "shift"],
         "p",
@@ -263,8 +263,7 @@ keys = [
         lazy.layout.delete(),
         desc="Remove column from layout",
     ),
-    Key([mod, "shift"], "bracketright",
-        lazy.layout.add(), desc="Add column to layout"),
+    Key([mod, "shift"], "bracketright", lazy.layout.add(), desc="Add column to layout"),
     # KEY CHORDS
 ]
 
@@ -272,22 +271,19 @@ groups = [
     Group("  "),
     Group(
         " 爵 ",
-        matches=[
-            Match(wm_class=["Google-chrome", "Firefox-esr", "Brave-browser"])],
+        matches=[Match(wm_class=["Google-chrome", "Firefox-esr", "Brave-browser"])],
     ),
-    Group("  ",
-          matches=[Match(wm_class=["Caprine", "discord",
-                         "Microsoft Teams - Preview"])],
-          ),
+    Group(
+        "  ",
+        matches=[Match(wm_class=["Caprine", "discord", "Microsoft Teams - Preview"])],
+    ),
     Group(
         "  ",
         matches=[
-            Match(wm_class=["jetbrains-pycharm",
-                  "jetbrains-rider", "jetbrains-clion"])
+            Match(wm_class=["jetbrains-pycharm", "jetbrains-rider", "jetbrains-clion"])
         ],
     ),
-    Group("   ", matches=[
-          Match(wm_class=["Virt-manager", "looking-glass-client"])]),
+    Group("   ", matches=[Match(wm_class=["Virt-manager", "looking-glass-client"])]),
     Group("   ", matches=[Match(wm_class=["obsidian"])]),
     Group("  ", matches=[Match(wm_class=["Blender", "geeqie"])]),
     Group("  ", matches=[Match(wm_class=["vlc", "Parole"])], layout="grid"),
@@ -326,8 +322,7 @@ groups.append(
     ScratchPad(
         "scratchpad",
         [
-            DropDown("term", "alacritty", width=0.4,
-                     x=0.3, y=0.2, opacity=0.9),
+            DropDown("term", "alacritty", width=0.4, x=0.3, y=0.2, opacity=0.9),
             # DropDown("volume", "pavucontrol", width=0.5, x=0.3, y=0.3, opacity=0.9),
             DropDown(
                 "camera",
@@ -419,10 +414,7 @@ widget_defaults = dict(
 
 extension_defaults = widget_defaults.copy()
 
-font_defaults = dict(
-    font="0xProto Nerd Font",
-    fontsize=14
-)
+font_defaults = dict(font="0xProto Nerd Font", fontsize=14)
 
 
 def get_gap_widget(size, bg_color="00000000"):
@@ -436,7 +428,7 @@ def get_separator_widget(separator, fg_color, bg_color="00000000"):
         font="0xProto Nerd Font",
         fontsize=26,  # Font pixel size. Calculated if None.
         foreground=fg_color,
-        background=bg_color
+        background=bg_color,
     )
     return widget.TextBox(separator, **separator_conf)
 
@@ -569,7 +561,7 @@ def window_count(bg_color):
         text_format="{num}",
         padding=0,
         show_zero=True,
-        fontsize=11
+        fontsize=11,
     )
 
 
@@ -578,10 +570,7 @@ def current_layout(bg_color):
 
     # )
     return widget.CurrentLayoutIcon(
-        background=bg_color,
-        padding=4,
-        fontsize=12,
-        scale=0.6
+        background=bg_color, padding=4, fontsize=12, scale=0.6
     )
 
 
@@ -611,8 +600,8 @@ def net(bg_color=colors["bg"]):
         background=bg_color,
         **font_defaults,
         prefix="M",
-        format='{down:6.2f}{down_suffix}↓{up:6.2f}{up_suffix}↑',
-        padding=0
+        format="{down:6.2f}{down_suffix}↓{up:6.2f}{up_suffix}↑",
+        padding=0,
     )
 
 
@@ -637,7 +626,7 @@ def get_weather(bg_color=colors["bg"]):
         api_key=key,
         cityid=cityid,
         metric=False,
-        format='{icon} {temp}°{units_temperature} ',
+        format="{icon} {temp}°{units_temperature} ",
         **font_defaults,
     )
 
@@ -828,7 +817,7 @@ def get_primary_bar(style_dict):
             clock(),
         ],
         30,
-        **style_dict
+        **style_dict,
     )
 
 
@@ -871,7 +860,7 @@ def get_secondary_bar(style_dict):
             clock(),
         ],
         30,
-        **style_dict
+        **style_dict,
     )
 
 
