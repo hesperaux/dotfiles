@@ -124,7 +124,7 @@ home_symbol = '󰋜'
 [directory.substitutions]
 '/usr/local/bin' = '/u/l/bin'
 '/usr/bin' = '/u/bin'
-'/mnt' = '󰋊'
+'/mnt' = '󰋊 '
 # '/Repos/Git' = 'repos'
 # '/repos' = 'repos'
 
