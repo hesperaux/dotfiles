@@ -106,7 +106,7 @@ disabled = false
 
 [sudo]
 disabled = false
-symbol = ''
+symbol = '#'
 
 [shell]
 disabled = false
@@ -119,6 +119,7 @@ disabled = true
 truncation_length = 3
 truncate_to_repo = true
 truncation_symbol = '.../'
+read_only= ''
 home_symbol = '󰋜'
 
 [directory.substitutions]
