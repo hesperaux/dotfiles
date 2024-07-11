@@ -32,7 +32,7 @@ return {
             button = '',
             -- Enables / disables diagnostic symbols
             diagnostics = {
-                [vim.diagnostic.severity.ERROR] = { enabled = false, icon = 'ﬀ ' },
+                [vim.diagnostic.severity.ERROR] = { enabled = false, icon = ' ' },
                 [vim.diagnostic.severity.WARN] = { enabled = false, icon = ' ' },
                 [vim.diagnostic.severity.INFO] = { enabled = false },
                 [vim.diagnostic.severity.HINT] = { enabled = false },
@@ -50,7 +50,7 @@ return {
                 -- Requires `nvim-web-devicons` if `true`
                 enabled = true,
             },
-            separator = { left = '', right = '' },
+            separator = { left = '', right = '' },
 
             -- If true, add an additional separator at the end of the buffer list
             separator_at_end = false,
