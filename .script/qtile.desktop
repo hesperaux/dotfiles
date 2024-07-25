@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Qtile
+Comment=Qtile Session
+Exec=/opt/qtile/venv/bin/qtile start
+Type=Application
+Keyworks=tiling;wm

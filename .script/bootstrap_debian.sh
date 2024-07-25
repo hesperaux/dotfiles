@@ -283,6 +283,13 @@ install_qtile() {
     /opt/qtile/venv/bin/pip install iwlib
     /opt/qtile/venv/bin/pip install pulsectl_asyncio
     /opt/qtile/venv/bin/pip install dbus-next
+
+    git clone https://github.com/elParaguayo/qtile-extras.git ~/git/qtile-extras
+    cd ~/git/qtile-extras/
+    git checkout v0.27.0
+    /opt/qtile/venv/bin/pip install .
+    sudo cp ~/.script/qtile.desktop /usr/share/xsessions/
+    sudo chown root:root /usr/share/xsessions/qtile.desktop
 }
 
 install_pywal() {
@@ -344,13 +351,16 @@ elif [[ "$1" == "rust" ]]; then
     exit
 elif [[ "$1" == "dotfiles" ]]; then
     if [[ ! -d "${HOME}/.wallfiles" ]]; then
-        git clone git@github.com:hesperaux/wallfiles.git --bare ~/.wallfiles
+        # git clone git@github.com:hesperaux/wallfiles.git --bare ~/.wallfiles
+        git clone https://github.com/hesperaux/wallfiles.git --bare ~/.wallfiles
     fi;
     if [[ ! -d "${HOME}/.themefiles" ]]; then
-        git clone git@github.com:hesperaux/themefiles.git --bare ~/.themefiles
+        # git clone git@github.com:hesperaux/themefiles.git --bare ~/.themefiles
+        git clone https://github.com/hesperaux/themefiles.git --bare ~/.themefiles
     fi;
     if [[ ! -d "${HOME}/.fontfiles" ]]; then
-        git clone git@github.com:hesperaux/fontfiles.git --bare ~/.fontfiles
+        # git clone git@github.com:hesperaux/fontfiles.git --bare ~/.fontfiles
+        git clone https://github.com/hesperaux/fontfiles.git --bare ~/.fontfiles
     fi;
     dotfiles config --local status.showUntrackedFiles no
     wallfiles config --local status.showUntrackedFiles no
