@@ -8,6 +8,13 @@ install_pyenv() {
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 }
 
+install_wezterm() {
+    curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+    echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+    sudo apt-get update
+    sudo apt-get install wezterm
+ }
+
 install_polybar_themes () {
     mkdir ~/repos
     mkdir ~/git
@@ -322,6 +329,9 @@ elif [[ "$1" == "server-packages" ]]; then
 elif [[ "$1" == "neovim" ]]; then
     install_neovim_git
     exit
+elif [[ "$1" == "wezterm" ]]; then
+    install_wezterm
+    exit
 elif [[ "$1" == "zsh" ]]; then
     install_zsh_with_zgenom
     exit
@@ -368,5 +378,5 @@ elif [[ "$1" == "dotfiles" ]]; then
     fontfiles config --local status.showUntrackedFiles no
     exit
 else
-    echo "Options are: looking-glass, rofi-calc, fzf, starship, qtile, pywal, pyenv, neovim, zsh, rust, dotnet, brave, dotfiles, desktop-packages, server-packages"
+    echo "Options are: looking-glass, rofi-calc, fzf, starship, qtile, pywal, pyenv, neovim, wezterm, zsh, rust, dotnet, brave, dotfiles, desktop-packages, server-packages"
 fi;
