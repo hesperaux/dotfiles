@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=21.2
+Type=Application
+Name=Freecad 21.2
+Comment=FreeCAD from snap, version 21.2
+Exec=snap run freecad
+Icon=~/.local/share/icons/freecad.svg
+Terminal=false
+StartupNotify=false
