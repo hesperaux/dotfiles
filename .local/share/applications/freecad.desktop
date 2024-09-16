@@ -1,9 +1,9 @@
 [Desktop Entry]
-Version=1.0 RC1
+Version=1.0-RC1
 Type=Application
 Name=Freecad 1.0 RC1
 Comment=FreeCAD 1.0 RC1 AppImage
-Exec=~/.local/share/bin/FreeCAD_1.0-RC1.AppImage
+Exec=.local/share/bin/FreeCAD_1.0-RC1.AppImage
 Icon=~/.local/share/icons/freecad.svg
 Terminal=false
 StartupNotify=false
