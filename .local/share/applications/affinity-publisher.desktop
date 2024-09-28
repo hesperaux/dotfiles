@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=2.5.3
+Type=Application
+Name=Affinity Publisher
+Comment=Affinity Publisher
+Exec=/usr/local/bin/rum ElementalWarrior-8.14 /home/hesperaux/.wineAffinity wine /home/hesperaux/.wineAffinity/drive_c/Program\ Files/Affinity/Publisher\ 2/Publisher.exe
+Icon=~/.local/share/icons/affinity_publisher.png
+Terminal=false
+StartupNotify=false
