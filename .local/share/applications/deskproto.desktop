@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=8.0
+Type=Application
+Name=DeskProto 8.0
+Comment=DeskProto 8.0 AppImage
+Exec=.local/share/bin/DeskProto80.AppImage
+Icon=~/.local/share/icons/deskproto.png
+Terminal=false
+StartupNotify=false
