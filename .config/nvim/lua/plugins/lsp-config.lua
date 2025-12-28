@@ -32,7 +32,6 @@ return {
                     -- "htmx",
                     "jsonls",
                     "jdtls",
-                    "tsserver",
                     "marksman",
                     "intelephense",
                     "powershell_es",
@@ -78,7 +77,6 @@ return {
             lspconfig.rust_analyzer.setup({ capabilities = capabilities })
             lspconfig.bashls.setup({ capabilities = capabilities })
             lspconfig.pylsp.setup({ capabilities = capabilities })
-            lspconfig.tsserver.setup({ capabilities = capabilities })
             lspconfig.yamlls.setup({ capabilities = capabilities })
             lspconfig.terraformls.setup({ capabilities = capabilities })
 
