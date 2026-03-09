@@ -6,7 +6,7 @@
       "name": "Aria Home (GW)",
       "options": {
         "baseURL": "https://ai.stronghold/gw/v1",
-        "apiKey": "{env:ARIA_API_GW_KEY}"
+        "apiKey": "{env:ARIA_API_GW_KEY}",
         "headers": {
           "X-Tool-Name": "opencode"
         }
