@@ -28,7 +28,7 @@ export ZSH2=$HOME/.config/zsh
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(starship init zsh)"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export PATH=${PATH}:${HOME}/.dotnet/tools/:/usr/local/:${HOME}/go/bin/:${HOME}/.local/bin/codelldb/extension/adapter/:${HOME}/.cargo/bin/
+export PATH=${PATH}:${HOME}/.dotnet/tools/:/usr/local/:/usr/local/go/bin/:${HOME}/.local/bin/codelldb/extension/adapter/:${HOME}/.cargo/bin/
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${HOME}/git/cuda/cuda-11.8/lib64
 export CUDA_HOME=${HOME}/git/cuda/cuda-11.8/
 export EDITOR=nvim
@@ -50,3 +50,21 @@ export AWS_DEFAULT_REGION="us-west-2"
 if [ -z "$AWS_PROFILE" ]; then
   export AWS_PROFILE="rfideas-dev"
 fi
+
+# opencode
+export PATH=/home/hesperaux/.opencode/bin:$PATH
+
+
+# AriaHome - Trust self-signed certificate for Bun/BoringSSL (OpenCode)
+export SSL_CERT_DIR=/etc/ssl/certs
+export NODE_USE_SYSTEM_CA=1
+#export SSL_CERT_FILE=/usr/local/share/ca-certificates/ai.stronghold.crt
+export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+export NODE_OPTIONS="--use-system-ca"
+export BUN_OPTIONS="--use-system-ca" 
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+
+# AriaHome - Trust self-signed certificate for Node.js and Bun/BoringSSL
+export NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/ai.stronghold.crt
+
+source ~/.zshrc.priv

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "aria-home": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Aria Home (GW)",
+      "options": {
+        "baseURL": "https://ai.stronghold/gw/v1",
+        "apiKey": "{env:ARIA_API_GW_KEY}"
+        "headers": {
+          "X-Tool-Name": "opencode"
+        }
+      },
+      "models": {
+        "llm-coding": {
+          "name": "llm-coding-gw",
+          "limit": {
+            "context": 155000,
+            "output": 65536
+          }
+        }
+      }
+    },
+    "aria-home-direct": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Aria Home (Direct)",
+      "options": {
+        "baseURL": "http://ai:8000/v1",
+        "headers": {
+          "X-Tool-Name": "opencode"
+        }
+      },
+      "models": {
+        "llm-coding": {
+          "name": "llm-coding-direct",
+          "limit": {
+            "context": 155000,
+            "output": 65536
+          }
+        }
+      }
+    }
+  },
+  "mcp": {
+    "ariahome": {
+      "type": "remote",
+      "url": "http://localhost:8080/v1/mcp/mcp",
+      "enabled": true,
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer ARIA_{env:ARIA_HOME_MCP_KEY}"
+      }
+    },
+    "penpot": {
+      "type": "remote",
+      "url": "http://localhost:4401/mcp",
+      "enabled": true,
+      "timeout": 120000
+    }
+  }
+}
