@@ -65,6 +65,21 @@ Examples:
 EOF
 }
 
+# Pic Sync - Copy uploaded screenshot to current directory
+# Run this in opencode with: !picsync
+picsync() {
+    if [[ -f ~/pic.png ]]; then
+        cp ~/pic.png ./pic.png
+        echo "✅ pic.png copied to current directory"
+        echo "   Use @pic.png in opencode"
+    else
+        echo "❌ ~/pic.png not found"
+        echo "   Upload a screenshot first from your local terminal:"
+        echo "   pic-ai  # or pic-quasar, etc."
+        return 1
+    fi
+}
+
 # Completions
 if [[ -n "$ZSH_VERSION" ]] && type compdef &>/dev/null; then
     _ssh_hosts() { local -a h=(ai ood quasar nebula ceres emonpi monolith); _describe 'hosts' h; }
