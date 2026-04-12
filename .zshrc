@@ -5,6 +5,11 @@ bindkey -v
 [[ -f $HOME/.bash_priv_aliases ]] && source ~/.bash_priv_aliases
 [[ -f $HOME/.shrc_priv ]] && source ~/.shrc_priv
 [[ -f $HOME/.shell_functions.sh ]] && source ~/.shell_functions.sh
+
+export ZSH2=$HOME/.config/zsh
+
+# WezTerm integration - function-based naming (connect, goto, remote-do)
+[[ -f $ZSH2/functions.zsh ]] && source $ZSH2/functions.zsh
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 source ~/.zgen/zgenom.zsh
@@ -20,7 +25,6 @@ if ! zgenom saved; then
   zgenom save
 fi
 
-export ZSH2=$HOME/.config/zsh
 [[ -f $ZSH2/history.zsh ]] && source $ZSH2/history.zsh
 [[ -f $ZSH2/plugins.zsh ]] && source $ZSH2/plugins.zsh
 [[ -f $ZSH2/zoxide.zsh ]] && source $ZSH2/zoxide.zsh
@@ -68,3 +72,9 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 export NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/ai.stronghold.crt
 
 source ~/.zshrc.priv
+
+# WezTerm SSH aliases
+[[ -f $ZSH2/ssh-aliases.zsh ]] && source $ZSH2/ssh-aliases.zsh
+
+# Pic Bridge - Screenshot sharing for opencode over SSH
+[[ -f $ZSH2/pic-bridge.zsh ]] && source $ZSH2/pic-bridge.zsh
