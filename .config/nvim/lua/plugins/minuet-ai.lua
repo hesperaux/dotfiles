@@ -23,22 +23,18 @@ return {
                             temperature = 0.0,
                             stop = {'\u{FEC2}', '```'},
                         },
-                        get_text_fn = {
-                            stream = function(json)
-                                local text = json.choices[1].delta and json.choices[1].delta.text or ""
-                                return text:gsub('\u{FEC0}', ''):gsub('\u{FEC1}', ''):gsub('\u{FEC2}', '')
-                            end,
-                            no_stream = function(json)
-                                local text = json.choices[1].text or ""
-                                return text:gsub('\u{FEC0}', ''):gsub('\u{FEC1}', ''):gsub('\u{FEC2}', '')
-                            end,
-                        },
                         template = {
                             suffix = function(context_before_cursor, context_after_cursor, opts)
                                 return '\u{FEC2}' .. context_after_cursor
                             end,
                             prompt = function(context_before_cursor, context_after_cursor, opts)
                                 return '\u{FEC0}' .. context_before_cursor .. '\u{FEC1}'
+                            end,
+                        },
+                        get_text_fn = {
+                            no_stream = function(json)
+                                local text = json.choices[1].text or ""
+                                return text:gsub('\u{FEC0}', ''):gsub('\u{FEC1}', ''):gsub('\u{FEC2}', '')
                             end,
                         },
                     },
