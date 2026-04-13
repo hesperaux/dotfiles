@@ -18,7 +18,7 @@ vim.keymap.set('n', '<leader>sh', '<C-w>s<C-w>j', {})
 vim.keymap.set('n', 'U', '<C-R>', {}) -- Redo command
 vim.keymap.set('n', '<leader><', 'V`]<', {})
 vim.keymap.set('n', '<leader>>', 'V`]>', {})
-vim.keymap.set('n', "<C-W><C-W>", ":BufferClose<CR>", {})
+-- vim.keymap.set('n', "<C-W><C-W>", ":BufferClose<CR>", {}) -- Disabled: may conflict with window commands
 vim.keymap.set("n", "<C-W>,", ":vertical resize -10<CR>", {noremap=true})
 vim.keymap.set("n", "<C-W>.", ":vertical resize +10<CR>", {noremap=true})
 vim.keymap.set('n', '<leader>eo', 'o<Esc>k', {})

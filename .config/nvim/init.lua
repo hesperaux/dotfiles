@@ -1,6 +1,6 @@
--- Here's an SSL ignore just to make everything nice and fucked.
+-- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -11,10 +11,15 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+
+-- Load vim settings and keymaps BEFORE loading plugins (CRITICAL for leader key)
+require("vim-settings")
+
+-- Basic vim settings
 vim.cmd.set("number")
 vim.cmd.set("relativenumber")
 vim.cmd.set("signcolumn=number")
 vim.cmd.set("termguicolors")
+
+-- Setup lazy.nvim
 require("lazy").setup("plugins")
-
-

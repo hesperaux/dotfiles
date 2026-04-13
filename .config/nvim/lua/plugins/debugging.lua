@@ -3,10 +3,10 @@ return {
     dependencies = {
         'rcarriga/nvim-dap-ui',
         'nvim-neotest/nvim-nio'
-
     },
     config = function()
-        local dap, dapui = require("dap"), require("dapui")
+        local dap = require("dap")
+        local dapui = require("dapui")
         dapui.setup()
         dap.listeners.before.attach.dapui_config = function()
             dapui.open()
@@ -20,17 +20,12 @@ return {
         dap.listeners.before.event_exited.dapui_config = function()
             dapui.close()
         end
-        vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, {})
-        vim.keymap.set('n', '<leader>dc', dap.continue, {})
-        vim.keymap.set('n', '<leader>ds', dap.step_over, {})
-        vim.keymap.set('n', '<leader>di', dap.step_into, {})
+        vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
+        vim.keymap.set('n', '<leader>dc', dap.continue, { desc = "Debug continue" })
+        vim.keymap.set('n', '<leader>ds', dap.step_over, { desc = "Step over" })
+        vim.keymap.set('n', '<leader>di', dap.step_into, { desc = "Step into" })
 
         -- C++/Rust
-        dap.adapters.codelldb = {
-            type = 'server',
-            host = '127.0.0.1',
-            port = 13000 -- 💀 Use the port printed out or specified with `--port`
-        }
         dap.adapters.codelldb = {
             type = 'server',
             port = "${port}",
@@ -38,7 +33,6 @@ return {
                 -- CHANGE THIS to your path!
                 command = vim.fn.expand('$HOME/.local/bin/codelldb/extension/adapter/codelldb'),
                 args = { "--port", "${port}" },
-
                 -- On windows you may have to uncomment this:
                 -- detached = false,
             }
@@ -58,8 +52,8 @@ return {
         }
         dap.configurations.c = dap.configurations.cpp
         dap.configurations.rust = dap.configurations.cpp
-        -- CSharp
 
+        -- CSharp
         dap.adapters.coreclr = {
             type = 'executable',
             command = '/usr/local/netcoredbg',
@@ -102,7 +96,7 @@ return {
                 })
             end
         end
-        local dap = require('dap')
+
         dap.configurations.python = {
             {
                 -- The first three options are required by nvim-dap

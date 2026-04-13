@@ -1,0 +1,9 @@
+FIM tokens for Qwen:
+Start: 
+Middle: 
+End: 
+
+In hex:
+Start: U+FEC0
+Middle: U+FEC1
+End: U+FEC2

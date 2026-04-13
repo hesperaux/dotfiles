@@ -1,27 +1,37 @@
 return {
-	"nvimtools/none-ls.nvim",
-	config = function()
-		local null_ls = require("null-ls")
-		null_ls.setup({
-			sources = {
-				null_ls.builtins.formatting.stylua,
-				-- null_ls.builtins.formatting.beautysh,
-				null_ls.builtins.formatting.black,
-				-- null_ls.builtins.formatting.clang_format,
-				null_ls.builtins.formatting.csharpier,
-				null_ls.builtins.formatting.sql_formatter,
-				null_ls.builtins.formatting.rustywind,
-				null_ls.builtins.formatting.djlint,
-				null_ls.builtins.formatting.prettier,
-				-- null_ls.builtins.formatting.terraform_validate,
-				-- null_ls.builtins.diagnostics.eslint_d,
-				null_ls.builtins.diagnostics.cmake_lint,
-				-- null_ls.builtins.diagnostics.cpplint,
-				null_ls.builtins.diagnostics.djlint,
-				null_ls.builtins.diagnostics.trivy,
-				-- null_ls.builtins.diagnostics.jsonlint,
-				-- null_ls.builtins.diagnostics.terraform_validate,
-			},
-		})
-	end,
+    "nvimtools/none-ls.nvim",
+    config = function()
+        local null_ls = require("null-ls")
+        local sources = {}
+
+        -- Only add sources for tools that are likely to be installed
+        -- Check if command exists before adding source
+        local function command_exists(cmd)
+            return vim.fn.executable(cmd) == 1
+        end
+
+        -- Formatters (only add if tool exists)
+        if command_exists("stylua") then
+            table.insert(sources, null_ls.builtins.formatting.stylua)
+        end
+        if command_exists("black") then
+            table.insert(sources, null_ls.builtins.formatting.black)
+        end
+        if command_exists("prettier") then
+            table.insert(sources, null_ls.builtins.formatting.prettier)
+        end
+
+        -- Diagnostics (only add if tool exists)
+        if command_exists("cmake-lint") or command_exists("cmake_lint") then
+            table.insert(sources, null_ls.builtins.diagnostics.cmake_lint)
+        end
+
+        null_ls.setup({
+            sources = sources,
+            -- Disable autoformat on save to avoid errors
+            on_attach = function(client, bufnr)
+                -- Don't autoformat, let user trigger manually
+            end,
+        })
+    end,
 }
