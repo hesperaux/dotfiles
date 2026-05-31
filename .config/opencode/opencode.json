@@ -4,7 +4,7 @@
     "provider": {
         "aria-home": {
             "npm": "@ai-sdk/openai-compatible",
-            "name": "Aria Home (GW)",
+            "name": "Aria (GW)",
             "options": {
                 "baseURL": "https://ai.stronghold/gw/v1",
                 "apiKey": "{env:ARIA_API_GW_KEY}",
@@ -16,8 +16,43 @@
                 "llm-coding": {
                     "name": "llm-coding-gw",
                     "limit": {
-                        "context": 143360,
-                        "output": 65536
+                        "context": 250000,
+                        "output": 128000
+                    }
+                },
+                "llm-research": {
+                    "name": "llm-research-gw",
+                    "limit": {
+                        "context": 250000,
+                        "output": 128000
+                    }
+                },
+                "accounts/fireworks/routers/kimi-k2p6-turbo": {
+                    "name": "llm-firepass",
+                    "limit": {
+                        "context": 256000,
+                        "output": 128000
+                    }
+                },
+                "glm5.1": {
+                    "name": "llm-glm-5.1",
+                    "limit": {
+                        "context": 200000,
+                        "output": 128000
+                    }
+                },
+                "glm5-turbo": {
+                    "name": "llm-glm-5-turbo",
+                    "limit": {
+                        "context": 200000,
+                        "output": 128000
+                    }
+                },
+                "glm5v-turbo": {
+                    "name": "llm-glm-5v-turbo",
+                    "limit": {
+                        "context": 200000,
+                        "output": 128000
                     }
                 }
             }
@@ -38,39 +73,7 @@
                         "context": 143360,
                         "output": 65536
                     }
-                }
-            }
-        },
-        "aria-home-research": {
-            "npm": "@ai-sdk/openai-compatible",
-            "name": "Aria Research (GW)",
-            "options": {
-                "baseURL": "https://ai.stronghold/gw/v1",
-                "apiKey": "{env:ARIA_API_GW_KEY}",
-                "headers": {
-                    "X-Tool-Name": "opencode"
-                }
-            },
-            "models": {
-                "llm-research": {
-                    "name": "llm-research-gw",
-                    "limit": {
-                        "context": 128000,
-                        "output": 32768
-                    }
-                }
-            }
-        },
-        "aria-home-research-direct": {
-            "npm": "@ai-sdk/openai-compatible",
-            "name": "Aria Research (Direct)",
-            "options": {
-                "baseURL": "http://ai:8000/v1",
-                "headers": {
-                    "X-Tool-Name": "opencode"
-                }
-            },
-            "models": {
+                },
                 "llm-research": {
                     "name": "llm-research-direct",
                     "limit": {
@@ -79,18 +82,17 @@
                     }
                 }
             }
-        }
+        },
     },
     "mcp": {
-        "ariahome": {
-            "type": "remote",
-            "url": "http://localhost:8080/v1/mcp/mcp",
-            "enabled": true,
-            "oauth": false,
+	"ariahome": {
+	  "type": "remote",
+	  "url": "http://localhost:12344/mcp",
+	  "enabled": true,
             "headers": {
                 "Authorization": "Bearer ARIA_{env:ARIA_HOME_MCP_KEY}"
             }
-        },
+	},
         "penpot": {
             "type": "remote",
             "url": "http://localhost:4401/mcp",
