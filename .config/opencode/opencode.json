@@ -34,27 +34,55 @@
                         "output": 128000
                     }
                 },
-                "glm5.1": {
+                "glm-5.1": {
                     "name": "llm-glm-5.1",
                     "limit": {
                         "context": 200000,
                         "output": 128000
                     }
                 },
-                "glm5-turbo": {
+                "glm-5-turbo": {
                     "name": "llm-glm-5-turbo",
                     "limit": {
                         "context": 200000,
                         "output": 128000
                     }
                 },
-                "glm5v-turbo": {
+                "glm-5v-turbo": {
                     "name": "llm-glm-5v-turbo",
                     "limit": {
                         "context": 200000,
                         "output": 128000
                     }
-                }
+                },
+                "glm-4.7": {
+                    "name": "llm-glm-4.7",
+                    "limit": {
+                        "context": 200000,
+                        "output": 128000
+                    }
+                },
+                "glm-4.7-flash": {
+                    "name": "llm-glm-4.7-flash",
+                    "limit": {
+                        "context": 200000,
+                        "output": 128000
+                    }
+                },
+                "glm-4.7-flashx": {
+                    "name": "llm-glm-4.7-flashx",
+                    "limit": {
+                        "context": 200000,
+                        "output": 128000
+                    }
+                },
+                "glm-4.6v": {
+                    "name": "llm-glm-4.7",
+                    "limit": {
+                        "context": 200000,
+                        "output": 128000
+                    }
+                },
             }
         },
         "aria-home-direct": {
