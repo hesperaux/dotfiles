@@ -1,6 +1,30 @@
 {
-    "model": "aria-home-direct/llm-coding",
+    "model": "aria-home/llm-coding",
     "$schema": "https://opencode.ai/config.json",
+    "agent": {
+        "build": {
+            "temperature": 0.5,
+            "top_p": 0.95,
+        },
+        "plan": {
+            "temperature": 0.5,
+            "top_p": 0.95,
+        },
+        "document": {
+            "temperature": 0.8,
+            "top_p": 0.92,
+            "prompt": "You are a technical writer responsible for reading and understanding code and software design and architecture, then creating well-organized, detailed documentation. You are also highly skilled at evaluating code and looking for changes not reflected in the documentation. Your goal is to update all documentation by creating new or updating old documents. Use markdown with mermaid diagrams and SVGs. Check for a Docusaurus project and update documents there instead, if applicable. The user will expect you to rebuild and restart the docusaurus application in this case."
+        },
+        "code-reviewer": {
+            "description": "Reviews code for best practices and potential issues",
+            "mode": "all",
+            "model": "aria-home/llm-coding",
+            "prompt": "You are a code reviewer. Focus on security, performance, and maintainability. Evaluate the design with a critical eye. Focus on the big picture as well as the little details. The user is an experienced software engineer and is very accustomed to negative and constructive criticism. Please respectfully question existing conventions, design patterns, and code idioms whenever you see possible room for improvement. The code should be reviewed first from the lens of what has recently changed, and then afterwards, passed over in its entirety. Create a final summary for the user in both categories.",
+            "permission": {
+                "edit": "deny"
+            }
+        }
+    },
     "provider": {
         "aria-home": {
             "npm": "@ai-sdk/openai-compatible",
@@ -15,6 +39,7 @@
             "models": {
                 "llm-coding": {
                     "name": "llm-coding-gw",
+                    "temperature": true,
                     "limit": {
                         "context": 250000,
                         "output": 128000
@@ -22,9 +47,17 @@
                 },
                 "llm-research": {
                     "name": "llm-research-gw",
+                    "temperature": true,
                     "limit": {
                         "context": 250000,
                         "output": 128000
+                    }
+                },
+                "llm-compaction": {
+                    "name": "llm-compaction-gw",
+                    "limit": {
+                        "context": 262144,
+                        "output": 262144
                     }
                 },
                 "accounts/fireworks/routers/kimi-k2p6-turbo": {
@@ -82,7 +115,7 @@
                         "context": 200000,
                         "output": 128000
                     }
-                },
+                }
             }
         },
         "aria-home-direct": {
@@ -110,17 +143,17 @@
                     }
                 }
             }
-        },
+        }
     },
     "mcp": {
-	"ariahome": {
-	  "type": "remote",
-	  "url": "http://localhost:12344/mcp",
-	  "enabled": true,
+        "ariahome": {
+            "type": "remote",
+            "url": "http://localhost:12344/mcp",
+            "enabled": true,
             "headers": {
                 "Authorization": "Bearer ARIA_{env:ARIA_HOME_MCP_KEY}"
             }
-	},
+        },
         "penpot": {
             "type": "remote",
             "url": "http://localhost:4401/mcp",
