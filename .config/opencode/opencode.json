@@ -41,7 +41,7 @@
                     "name": "llm-coding-gw",
                     "temperature": true,
                     "limit": {
-                        "context": 250000,
+                        "context": 158720,
                         "output": 128000
                     }
                 },
@@ -49,14 +49,14 @@
                     "name": "llm-research-gw",
                     "temperature": true,
                     "limit": {
-                        "context": 250000,
+                        "context": 158720,
                         "output": 128000
                     }
                 },
                 "llm-compaction": {
                     "name": "llm-compaction-gw",
                     "limit": {
-                        "context": 262144,
+                        "context": 158720,
                         "output": 262144
                     }
                 },
@@ -76,13 +76,6 @@
                 },
                 "glm-5-turbo": {
                     "name": "llm-glm-5-turbo",
-                    "limit": {
-                        "context": 200000,
-                        "output": 128000
-                    }
-                },
-                "glm-5v-turbo": {
-                    "name": "llm-glm-5v-turbo",
                     "limit": {
                         "context": 200000,
                         "output": 128000
@@ -131,14 +124,14 @@
                 "llm-coding": {
                     "name": "llm-coding-direct",
                     "limit": {
-                        "context": 143360,
+                        "context": 158720,
                         "output": 65536
                     }
                 },
                 "llm-research": {
                     "name": "llm-research-direct",
                     "limit": {
-                        "context": 128000,
+                        "context": 158720,
                         "output": 32768
                     }
                 }
