@@ -147,9 +147,9 @@
                 "Authorization": "Bearer ARIA_{env:ARIA_HOME_MCP_KEY}"
             }
         },
-        "penpot": {
+        "pencil": {
             "type": "remote",
-            "url": "http://localhost:4401/mcp",
+            "url": "http://pencil.stronghold:8080/mcp",
             "enabled": true,
             "timeout": 120000
         }
