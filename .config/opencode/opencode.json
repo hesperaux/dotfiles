@@ -1,157 +1,227 @@
 {
-    "model": "aria-home/llm-coding",
-    "$schema": "https://opencode.ai/config.json",
-    "agent": {
-        "build": {
-            "temperature": 0.5,
-            "top_p": 0.95,
-        },
-        "plan": {
-            "temperature": 0.5,
-            "top_p": 0.95,
-        },
-        "document": {
-            "temperature": 0.8,
-            "top_p": 0.92,
-            "prompt": "You are a technical writer responsible for reading and understanding code and software design and architecture, then creating well-organized, detailed documentation. You are also highly skilled at evaluating code and looking for changes not reflected in the documentation. Your goal is to update all documentation by creating new or updating old documents. Use markdown with mermaid diagrams and SVGs. Check for a Docusaurus project and update documents there instead, if applicable. The user will expect you to rebuild and restart the docusaurus application in this case."
-        },
-        "code-reviewer": {
-            "description": "Reviews code for best practices and potential issues",
-            "mode": "all",
-            "model": "aria-home/llm-coding",
-            "prompt": "You are a code reviewer. Focus on security, performance, and maintainability. Evaluate the design with a critical eye. Focus on the big picture as well as the little details. The user is an experienced software engineer and is very accustomed to negative and constructive criticism. Please respectfully question existing conventions, design patterns, and code idioms whenever you see possible room for improvement. The code should be reviewed first from the lens of what has recently changed, and then afterwards, passed over in its entirety. Create a final summary for the user in both categories.",
-            "permission": {
-                "edit": "deny"
-            }
-        }
+  "model": "aria-home/llm-coding",
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "build": {
+      "temperature": 0.5,
+      "top_p": 0.95
     },
-    "provider": {
-        "aria-home": {
-            "npm": "@ai-sdk/openai-compatible",
-            "name": "Aria (GW)",
-            "options": {
-                "baseURL": "https://ai.stronghold/gw/v1",
-                "apiKey": "{env:ARIA_API_GW_KEY}",
-                "headers": {
-                    "X-Tool-Name": "opencode"
-                }
-            },
-            "models": {
-                "llm-coding": {
-                    "name": "llm-coding-gw",
-                    "temperature": true,
-                    "limit": {
-                        "context": 158720,
-                        "output": 128000
-                    }
-                },
-                "llm-research": {
-                    "name": "llm-research-gw",
-                    "temperature": true,
-                    "limit": {
-                        "context": 158720,
-                        "output": 128000
-                    }
-                },
-                "llm-compaction": {
-                    "name": "llm-compaction-gw",
-                    "limit": {
-                        "context": 158720,
-                        "output": 262144
-                    }
-                },
-                "accounts/fireworks/routers/kimi-k2p6-turbo": {
-                    "name": "llm-firepass",
-                    "limit": {
-                        "context": 256000,
-                        "output": 128000
-                    }
-                },
-                "glm-5.1": {
-                    "name": "llm-glm-5.1",
-                    "limit": {
-                        "context": 200000,
-                        "output": 128000
-                    }
-                },
-                "glm-5-turbo": {
-                    "name": "llm-glm-5-turbo",
-                    "limit": {
-                        "context": 200000,
-                        "output": 128000
-                    }
-                },
-                "glm-4.7": {
-                    "name": "llm-glm-4.7",
-                    "limit": {
-                        "context": 200000,
-                        "output": 128000
-                    }
-                },
-                "glm-4.7-flash": {
-                    "name": "llm-glm-4.7-flash",
-                    "limit": {
-                        "context": 200000,
-                        "output": 128000
-                    }
-                },
-                "glm-4.7-flashx": {
-                    "name": "llm-glm-4.7-flashx",
-                    "limit": {
-                        "context": 200000,
-                        "output": 128000
-                    }
-                },
-                "glm-4.6v": {
-                    "name": "llm-glm-4.7",
-                    "limit": {
-                        "context": 200000,
-                        "output": 128000
-                    }
-                }
-            }
-        },
-        "aria-home-direct": {
-            "npm": "@ai-sdk/openai-compatible",
-            "name": "Aria Home (Direct)",
-            "options": {
-                "baseURL": "http://ai:8000/v1",
-                "headers": {
-                    "X-Tool-Name": "opencode"
-                }
-            },
-            "models": {
-                "llm-coding": {
-                    "name": "llm-coding-direct",
-                    "limit": {
-                        "context": 158720,
-                        "output": 65536
-                    }
-                },
-                "llm-research": {
-                    "name": "llm-research-direct",
-                    "limit": {
-                        "context": 158720,
-                        "output": 32768
-                    }
-                }
-            }
-        }
+    "plan": {
+      "temperature": 0.5,
+      "top_p": 0.95
     },
-    "mcp": {
-        "ariahome": {
-            "type": "remote",
-            "url": "http://localhost:12344/mcp",
-            "enabled": true,
-            "headers": {
-                "Authorization": "Bearer ARIA_{env:ARIA_HOME_MCP_KEY}"
-            }
-        },
-        "pencil": {
-            "type": "remote",
-            "url": "http://pencil.stronghold:8080/mcp",
-            "enabled": true,
-            "timeout": 120000
-        }
+    "document": {
+      "temperature": 0.8,
+      "top_p": 0.92,
+      "prompt": "You are a technical writer responsible for reading and understanding code and software design and architecture, then creating well-organized, detailed documentation. You are also highly skilled at evaluating code and looking for changes not reflected in the documentation. Your goal is to update all documentation by creating new or updating old documents. Use markdown with mermaid diagrams and SVGs. Check for a Docusaurus project and update documents there instead, if applicable. The user will expect you to rebuild and restart the docusaurus application in this case."
+    },
+    "code-reviewer": {
+      "description": "Reviews code for best practices and potential issues",
+      "mode": "all",
+      "model": "aria-home/llm-coding",
+      "prompt": "You are a code reviewer. Focus on security, performance, and maintainability. Evaluate the design with a critical eye. Focus on the big picture as well as the little details. The user is an experienced software engineer and is very accustomed to negative and constructive criticism. Please respectfully question existing conventions, design patterns, and code idioms whenever you see possible room for improvement. The code should be reviewed first from the lens of what has recently changed, and then afterwards, passed over in its entirety. Create a final summary for the user in both categories.",
+      "permission": {
+        "edit": "deny"
+      }
     }
+  },
+  "provider": {
+    "aria-home": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Aria (GW)",
+      "options": {
+        "baseURL": "https://ai.stronghold/gw/v1",
+        "apiKey": "{env:ARIA_API_GW_KEY}",
+        "headers": {
+          "X-Tool-Name": "opencode"
+        }
+      },
+      "models": {
+        "llm-coding": {
+          "name": "llm-coding-gw",
+          "temperature": true,
+          "limit": {
+            "context": 158720,
+            "output": 128000
+          }
+        },
+        "llm-research": {
+          "name": "llm-research-gw",
+          "temperature": true,
+          "limit": {
+            "context": 158720,
+            "output": 128000
+          }
+        },
+        "llm-compaction": {
+          "name": "llm-compaction-gw",
+          "limit": {
+            "context": 158720,
+            "output": 262144
+          }
+        },
+        "glm-5.1": {
+          "name": "llm-glm-5.1",
+          "limit": {
+            "context": 200000,
+            "output": 128000
+          }
+        },
+        "glm-5-turbo": {
+          "name": "llm-glm-5-turbo",
+          "limit": {
+            "context": 200000,
+            "output": 128000
+          }
+        },
+        "glm-4.7": {
+          "name": "llm-glm-4.7",
+          "limit": {
+            "context": 200000,
+            "output": 128000
+          }
+        },
+        "glm-4.7-flash": {
+          "name": "llm-glm-4.7-flash",
+          "limit": {
+            "context": 200000,
+            "output": 128000
+          }
+        },
+        "glm-5.2": {
+          "name": "llm-glm-5.2",
+          "limit": {
+            "context": 1000000,
+            "output": 128000
+          }
+        },
+        "umans-glm-5.1": {
+          "name": "llm-umans-glm-5.1",
+          "limit": {
+            "context": 200000,
+            "output": 128000
+          }
+        },
+        "umans-kimi-k2.6": {
+          "name": "llm-umans-kimi-k2.6",
+          "limit": {
+            "context": 262100,
+            "output": 128000
+          }
+        },
+        "umans-qwen3.6-35b-a3b": {
+          "name": "llm-umans-qwen3.6-35b-a3b",
+          "limit": {
+            "context": 262100,
+            "output": 128000
+          }
+        },
+        "opencode-go/glm-5.1": {
+          "name": "llm-opencode-go/glm-5.1",
+          "limit": {
+            "context": 200000,
+            "output": 128000
+          }
+        },
+        "opencode-go/kimi-k2.6": {
+          "name": "llm-opencode-go/kimi-k2.6",
+          "limit": {
+            "context": 262100,
+            "output": 128000
+          }
+        },
+        "opencode-go/mimi-v2.5": {
+          "name": "llm-opencode-go/mimi-v2.5",
+          "limit": {
+            "context": 1000000,
+            "output": 128000
+          }
+        },
+        "opencode-go/mimi-v2.5-pro": {
+          "name": "llm-opencode-go/mimi-v2.5-pro",
+          "limit": {
+            "context": 1048576,
+            "output": 128000
+          }
+        },
+        "opencode-go/minimax-m3": {
+          "name": "llm-opencode-go/minimax-m3",
+          "limit": {
+            "context": 512000,
+            "output": 128000
+          }
+        },
+        "opencode-go/qwen3.7-max": {
+          "name": "llm-opencode-go/qwen3.7-max",
+          "limit": {
+            "context": 1000000,
+            "output": 128000
+          }
+        },
+        "opencode-go/qwen3.6-plus": {
+          "name": "llm-opencode-go/qwen3.6-plus",
+          "limit": {
+            "context": 1000000,
+            "output": 128000
+          }
+        },
+        "opencode-go/deepseek-v4-pro": {
+          "name": "llm-opencode-go/deepseek-v4-pro",
+          "limit": {
+            "context": 1000000,
+            "output": 128000
+          }
+        },
+        "opencode-go/deepseek-v4-flash": {
+          "name": "llm-opencode-go/deepseek-v4-flash",
+          "limit": {
+            "context": 1000000,
+            "output": 128000
+          }
+        }
+      }
+    },
+    "aria-home-direct": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Aria Home (Direct)",
+      "options": {
+        "baseURL": "http://ai:8000/v1",
+        "headers": {
+          "X-Tool-Name": "opencode"
+        }
+      },
+      "models": {
+        "llm-coding": {
+          "name": "llm-coding-direct",
+          "limit": {
+            "context": 158720,
+            "output": 65536
+          }
+        },
+        "llm-research": {
+          "name": "llm-research-direct",
+          "limit": {
+            "context": 158720,
+            "output": 32768
+          }
+        }
+      }
+    }
+  },
+  "mcp": {
+    "ariahome": {
+      "type": "remote",
+      "url": "http://localhost:12344/mcp",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer ARIA_{env:ARIA_HOME_MCP_KEY}"
+      }
+    },
+    "pencil": {
+      "type": "remote",
+      "url": "http://pencil.stronghold:3101/mcp",
+      "enabled": true,
+      "timeout": 120000
+    }
+  }
 }
