@@ -4,7 +4,6 @@ var API_BASE = "https://ai.stronghold/gw/v1";
 var DEFAULT_NPM = "@ai-sdk/openai-compatible";
 var EXTRA_HEADERS = { "X-Tool-Name": "opencode" };
 var ALLOWED_MODALITIES = new Set(["text", "audio", "image", "video", "pdf"]);
-var PROBE_TIMEOUT_MS = 10000;
 var MODELS_TIMEOUT_MS = 10000;
 
 import { readFileSync } from "fs";
@@ -85,28 +84,6 @@ function build(model) {
   return configModel;
 }
 
-async function isLoaded(modelId, apiKey) {
-  try {
-    const res = await fetch(`${API_BASE}/chat/completions`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        ...EXTRA_HEADERS
-      },
-      body: JSON.stringify({
-        model: modelId,
-        messages: [{ role: "user", content: "hi" }],
-        max_tokens: 1
-      }),
-      signal: AbortSignal.timeout(PROBE_TIMEOUT_MS)
-    });
-    return res.ok;
-  } catch {
-    return false;
-  }
-}
-
 async function getModels(apiKey) {
   const res = await fetch(`${API_BASE}/models`, {
     headers: { Authorization: `Bearer ${apiKey}`, ...EXTRA_HEADERS, Accept: "application/json" },
@@ -118,15 +95,10 @@ async function getModels(apiKey) {
   const data = await res.json();
   const remoteModels = data.data ?? [];
   const candidates = remoteModels.filter(shouldInclude);
-  log(`discovered ${candidates.length} candidate models, probing loaded status...`);
-  const loaded = await Promise.all(candidates.map((m) => isLoaded(m.id, apiKey)));
+  log(`discovered ${candidates.length} models (trust /v1/models for liveness)`);
   const result = {};
-  for (let i = 0; i < candidates.length; i++) {
-    if (!loaded[i]) {
-      log(`skipping unloaded model: ${candidates[i].id}`);
-      continue;
-    }
-    result[candidates[i].id] = build(candidates[i]);
+  for (const m of candidates) {
+    result[m.id] = build(m);
   }
   return result;
 }
