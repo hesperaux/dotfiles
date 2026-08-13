@@ -1,0 +1,299 @@
+#!/usr/bin/env python3
+"""DeepFilterNet wrapper: music separation + noise removal for voice recordings."""
+
+import sys
+import os
+
+VENV_SITE = "/opt/deepfilternet/lib/python3.11/site-packages"
+sys.path.insert(0, VENV_SITE)
+
+import argparse
+import shutil
+import subprocess
+import tempfile
+
+CHUNK_DURATION = 60   # seconds
+CROSSFADE = 0.5       # seconds
+SAMPLE_RATE = 48000
+
+# ── ffmpeg helpers ───────────────────────────────────────────────────────────
+
+def run_ffmpeg(args):
+    cmd = ["ffmpeg", "-y"] + args
+    subprocess.run(cmd, check=True, stdin=subprocess.DEVNULL,
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+def get_duration(path):
+    result = subprocess.run(
+        ["ffprobe", "-v", "quiet", "-show_entries", "format=duration",
+         "-of", "csv=p=0", path],
+        capture_output=True, text=True, check=True
+    )
+    return float(result.stdout.strip())
+
+
+def convert_to_wav(infile, outfile):
+    run_ffmpeg(["-i", infile, "-ar", str(SAMPLE_RATE), "-ac", "1",
+                "-c:a", "pcm_s16le", outfile])
+
+
+def convert_from_wav(wav_in, out_ext, outfile):
+    if out_ext in ("wav", "WAV"):
+        shutil.copy2(wav_in, outfile)
+        return
+    args = ["-i", wav_in]
+    if out_ext in ("mp3", "MP3"):
+        args += ["-codec:a", "libmp3lame", "-q:a", "2"]
+    elif out_ext in ("flac", "FLAC"):
+        args += ["-codec:a", "flac", "-compression_level", "8"]
+    elif out_ext in ("m4a", "M4A"):
+        args += ["-codec:a", "aac", "-b:a", "192k"]
+    args.append(outfile)
+    run_ffmpeg(args)
+
+
+# ── music separation ─────────────────────────────────────────────────────────
+
+def separate_vocals_demucs(wav_path, out_path):
+    """Use Demucs to isolate vocals from a WAV file."""
+    from demucs.api import Separator
+    import torchaudio
+    import torchaudio.functional as F
+
+    print("Separating vocals with Demucs...")
+    separator = Separator(device="cuda", progress=False)
+    _, sources = separator.separate_audio_file(wav_path)
+    vocals = sources["vocals"].squeeze(0).cpu()
+    # Demucs outputs at 44100 Hz, resample to 48000
+    vocals = F.resample(vocals, 44100, SAMPLE_RATE)
+    # Mono downmix if stereo
+    if vocals.shape[0] > 1:
+        vocals = vocals.mean(dim=0, keepdim=True)
+    del separator, sources
+    torchaudio.save(out_path, vocals, SAMPLE_RATE)
+    print("  Vocals isolated")
+
+
+def separate_vocals_mdxnet(wav_path, out_path):
+    """Use Demucs MDX model to isolate vocals from a WAV file."""
+    from demucs.api import Separator
+    import torchaudio.functional as F
+
+    import torchaudio
+    import torchaudio.functional as F
+    print("Separating vocals with Demucs (MDX-Net HQ bag)...")
+    separator = Separator(model="mdx_extra", device="cuda", progress=False)
+    _, sources = separator.separate_audio_file(wav_path)
+    vocals = sources["vocals"].squeeze(0).cpu()
+    # Resample from 44100 to 48000
+    vocals = F.resample(vocals, 44100, SAMPLE_RATE)
+    # Mono downmix if stereo
+    if vocals.shape[0] > 1:
+        vocals = vocals.mean(dim=0, keepdim=True)
+    del separator, sources
+    torchaudio.save(out_path, vocals, SAMPLE_RATE)
+    print("  Vocals isolated")
+
+
+def separate_vocals(wav_path, out_path, method):
+    if method == "demucs":
+        separate_vocals_demucs(wav_path, out_path)
+    elif method == "mdxnet":
+        separate_vocals_mdxnet(wav_path, out_path)
+    else:
+        raise ValueError(f"Unknown separation method: {method}")
+
+
+# ── energy-based split point detection ───────────────────────────────────────
+
+def find_split_points(wav_path, chunk_dur):
+    result = subprocess.run(
+        ["ffmpeg", "-i", wav_path, "-f", "s16le", "-ar", "100", "-ac", "1", "-"],
+        capture_output=True
+    )
+    import numpy as np
+    samples = np.frombuffer(result.stdout, dtype=np.int16).astype(np.float64)
+    sr = 100.0
+
+    win = int(sr)
+    rms = np.convolve(samples ** 2, np.ones(win) / win, mode="valid")
+    rms = np.sqrt(rms)
+
+    duration = len(samples) / sr
+    targets = np.arange(chunk_dur, duration - chunk_dur, chunk_dur)
+
+    splits = []
+    for t in targets:
+        start = max(0, int((t - 2) * sr))
+        end = min(len(rms), int((t + 2) * sr))
+        if end <= start:
+            continue
+        best = np.argmin(rms[start:end]) + start
+        splits.append(best / sr)
+
+    filtered = []
+    for s in splits:
+        if not filtered or s - filtered[-1] >= 5:
+            filtered.append(s)
+    return filtered
+
+
+# ── chunking ─────────────────────────────────────────────────────────────────
+
+def extract_chunks(wav_path, split_points, chunk_dir):
+    duration = get_duration(wav_path)
+    boundaries = [0.0] + split_points + [duration]
+    chunks = []
+    for i, (start, end) in enumerate(zip(boundaries, boundaries[1:])):
+        chunk_path = os.path.join(chunk_dir, f"chunk_{i:04d}.wav")
+        run_ffmpeg(["-i", wav_path, "-ss", f"{start:.3f}", "-to", f"{end:.3f}",
+                    "-c:a", "pcm_s16le", chunk_path])
+        chunks.append(chunk_path)
+    return chunks
+
+
+def crossfade_merge(chunk_paths, outfile):
+    if len(chunk_paths) == 1:
+        shutil.copy2(chunk_paths[0], outfile)
+        return
+    current = chunk_paths[0]
+    for i in range(1, len(chunk_paths)):
+        merged = os.path.join(os.path.dirname(outfile), f"merged_{i}.wav")
+        run_ffmpeg([
+            "-i", current, "-i", chunk_paths[i],
+            "-filter_complex", f"acrossfade=d={CROSSFADE}:c1=tri:c2=tri",
+            "-c:a", "pcm_s16le", merged
+        ])
+        current = merged
+    shutil.copy2(current, outfile)
+
+
+# ── denoising via Python API ─────────────────────────────────────────────────
+
+def denoise_chunks(chunk_paths, model_name, pf):
+    import torch
+    import torchaudio
+    from df import enhance, init_df
+
+    print(f"Loading model {model_name}...")
+    model, df_state, _ = init_df(
+        model_base_dir=model_name,
+        post_filter=pf,
+        log_level="WARNING",
+        log_file=None
+    )
+    device = next(model.parameters()).device
+    print(f"  Running on {device}")
+
+    results = []
+    for i, chunk_path in enumerate(chunk_paths):
+        audio, _ = torchaudio.load(chunk_path)
+        enhanced = enhance(model, df_state, audio)
+        results.append(enhanced.cpu())
+        print(f"  Enhanced chunk {i + 1}/{len(chunk_paths)}")
+
+    return results
+
+
+def save_tensor(tensor, path):
+    import torchaudio
+    torchaudio.save(path, tensor, SAMPLE_RATE)
+
+
+# ── main pipeline ────────────────────────────────────────────────────────────
+
+def process_file(infile, model, pf, output_dir, separation):
+    basename = os.path.basename(infile)
+    name, ext = os.path.splitext(basename)
+    ext_lower = ext.lower()
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Step 1: Convert to 48kHz WAV
+        tmpwav = os.path.join(tmpdir, f"{name}.wav")
+        print(f"Converting to 48kHz WAV: {basename}")
+        convert_to_wav(infile, tmpwav)
+
+        duration = get_duration(tmpwav)
+        print(f"  Duration: {duration:.1f}s")
+
+        # Step 2: Music separation (optional)
+        if separation:
+            vocals_wav = os.path.join(tmpdir, f"{name}_vocals.wav")
+            separate_vocals(tmpwav, vocals_wav, separation)
+            import torch
+            torch.cuda.empty_cache()
+            work_wav = vocals_wav
+        else:
+            work_wav = tmpwav
+
+        # Step 3: Chunk if needed, then denoise
+        if duration <= CHUNK_DURATION:
+            print(f"Processing (single chunk): {basename}")
+            chunks = [work_wav]
+            enhanced = denoise_chunks(chunks, model, pf)
+            denoised_wav = os.path.join(tmpdir, f"{name}_denoised.wav")
+            save_tensor(enhanced[0], denoised_wav)
+        else:
+            split_points = find_split_points(work_wav, CHUNK_DURATION)
+            num_chunks = len(split_points) + 1
+            print(f"Splitting into {num_chunks} segments at energy minima")
+
+            chunks = extract_chunks(work_wav, split_points, tmpdir)
+            enhanced = denoise_chunks(chunks, model, pf)
+
+            for i, tensor in enumerate(enhanced):
+                save_tensor(tensor, os.path.join(tmpdir, f"enhanced_{i:04d}.wav"))
+
+            enhanced_chunks = sorted(
+                [f for f in os.listdir(tmpdir) if f.startswith("enhanced_")]
+            )
+            enhanced_paths = [os.path.join(tmpdir, f) for f in enhanced_chunks]
+
+            denoised_wav = os.path.join(tmpdir, f"{name}_merged.wav")
+            print("Merging chunks with crossfade...")
+            crossfade_merge(enhanced_paths, denoised_wav)
+
+        # Step 4: Convert back to original format
+        out_ext = ext if ext else ".wav"
+        base_dir = output_dir if output_dir else os.path.dirname(os.path.abspath(infile))
+        outfile = os.path.join(base_dir, f"{name}-denoised{out_ext}")
+
+        if ext_lower in (".mp3", ".m4a", ".flac"):
+            print(f"Converting back to {ext.upper()}...")
+        convert_from_wav(denoised_wav, ext, outfile)
+        print(f"  -> {outfile}")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Denoise audio files with DeepFilterNet (optional music removal).",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Supported formats: MP3, M4A, FLAC, WAV.\n"
+            "Long files are automatically chunked at energy minima to avoid GPU OOM.\n"
+            "\n"
+            "Music separation isolates vocals before denoising, which helps when\n"
+            "there's background music. Demucs is generally higher quality; MDX-Net\n"
+            "is faster but may be slightly less accurate."
+        )
+    )
+    parser.add_argument("files", nargs="+", help="Audio files to denoise")
+    parser.add_argument("-o", "--output-dir", default="", help="Output directory (default: same as input)")
+    parser.add_argument("-m", "--model", default="DeepFilterNet3", help="Model name (default: DeepFilterNet3)")
+    parser.add_argument("--pf", action="store_true", help="Enable post-filter for aggressive noise suppression")
+    parser.add_argument("--separation", choices=["demucs", "mdxnet"], default=None,
+                        help="Isolate vocals before denoising (removes background music)")
+    args = parser.parse_args()
+
+    for f in args.files:
+        if not os.path.isfile(f):
+            print(f"error: file not found: {f}", file=sys.stderr)
+            sys.exit(1)
+        process_file(f, args.model, args.pf, args.output_dir, args.separation)
+
+    print("Done.")
+
+
+if __name__ == "__main__":
+    main()
